@@ -43,7 +43,7 @@ export const Header = () => {
           <p className="text-[#FFFFFF] font-bold text-sm leading-[24px]">
             Follow Us :
           </p>
-          <div className="flex gap-[5px]">
+          <div className="flex gap-[15px]">
             <FaInstagram className="text-[#FFFFFF]" />
             <FaYoutube className="text-[#FFFFFF]" />
             <FaFacebook className="text-[#FFFFFF]" />
