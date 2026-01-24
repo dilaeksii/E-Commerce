@@ -1,5 +1,7 @@
+
+
 export const ProductCard = ({product}) => {
-    
+
     return (<div>
         <img src={`/images/clothes${product.imageId}.jpg`} alt="" />
         <div className="flex flex-col items-center">

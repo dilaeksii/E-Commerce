@@ -71,7 +71,7 @@ export const Header = () => {
               <FaCaretDown className="shrink-0" />
             </button>
 
-            <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg">
+            <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg z-50">
               <a
                 className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
                 href="/shop"

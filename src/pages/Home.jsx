@@ -1,11 +1,15 @@
-
+import { Card } from "../../public/components/Card";
 import { Clients } from "../../public/components/Clients";
 import { ProductCard } from "../../public/components/ProductCard";
+import { SaleBlog } from "../../public/components/SaleBlog";
 import { ShopCards } from "../../public/components/ShopCards";
-
+import { homeCards } from "../data/HomeCard";
+import { saleCards } from "../data/SaleCard";
+import { useProducts } from "../ProductContext";
 
 export const Home = () => {
-
+  const { products, loadMore } = useProducts();
+  
 
   return (
     <>
@@ -58,14 +62,71 @@ export const Home = () => {
         </div>
         <div className="py-15 grid grid-cols-5 gap-8 px-30">
           {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
-        ))}
+            <ProductCard key={index} product={product} />
+          ))}
         </div>
-        <div className="flex justify-center">
-          <button id="more" className="border border-[#23A6F0] text-[#23A6F0] rounded-sm py-[15px] px-[40px] text-sm font-bold leading-[22px]">
+        <div className="flex justify-center relative z-50">
+          <button
+            onClick={loadMore}
+            type="button"
+            className="border border-[#23A6F0] text-[#23A6F0] rounded-sm py-[15px] px-[40px] text-sm font-bold leading-[22px] relative z-50"
+          >
             LOAD MORE PRODUCTS
           </button>
         </div>
+      </section>
+      <section className="py-[80px] px-30">
+        <div className="flex justify-around">
+          <div className="flex gap-5 h-[498px]">
+            <div className="bg-[url(/images/content1.jpg)] bg-no-repeat w-[217px] bg-center bg-cover h-[498px]"></div>
+            <div className="bg-[url(/images/content2.jpg)] bg-no-repeat w-[280px] bg-center bg-cover h-[498px]"></div>
+            
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="text-[#23A6F0] font-bold text-base leading-[24px]">
+              Featured Products
+            </p>
+            <p className="text-[#252B42] font-bold text-[40px] leading-[50px] py-5">
+              We love what we do
+            </p>
+            <p className="text-[#737373] font-normal text-sm leading-[20px] w-[351px]">
+              Problems trying to resolve the conflict between the two major
+              realms of Classical physics: Newtonian mechanics.
+              <br />
+              Problems trying to resolve the conflict between the two major
+              realms of Classical physics: Newtonian mechanics{" "}
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="py-[80px] px-30">
+        <div className="flex flex-col items-center gap-3">
+          <p className="text-[#737373] leading-[30px] text-xl">
+            Featured Products
+          </p>
+          <p className="text-[#252B42] leading-[32px] text-2xl">
+            THE BEST SERVICES
+          </p>
+          <p className="text-[#737373] leading-[20px] text-sm">
+            Problems trying to resolve the conflict between 
+          </p>
+        </div>
+        <div className="flex justify-around py-20">
+          {homeCards.map((card, index) => (
+            <Card key={index} card={card} />
+          ))}
+        </div>
+      </section>
+      <section className="py-[30px] px-30">
+          <div className="flex flex-col items-center">
+            <p className="text-[#23A6F0] text-sm font-bold leading-[24px] tracking-[0.2px]">Practice Advice</p>
+            <p className="text-[#252B42] text-[40px] font-bold leading-[50px] tracking-[0.2px]">Featured Posts</p>
+          </div>
+          <div className="flex justify-around py-30">
+            {saleCards.map((card, index) => (
+              <SaleBlog key={index} card={card} />
+            ))}
+          </div>
       </section>
     </>
   );

@@ -1,8 +1,8 @@
-import { LOAD_CLOTHES } from "./action";
+import { LOAD_PRODUCTS } from "./action";
 
 const imgId = () => Math.floor(Math.random() * 7) + 1;
 
-const initial = () => {
+export const initial = () =>
   Array.from({ length: 10 }, () => ({
     imageId: imgId(),
     title: "Graphic Design",
@@ -10,19 +10,22 @@ const initial = () => {
     price: 16.48,
     salePrice: 6.48,
   }));
-};
 
 export const initialState = {
-    clothes: initial(),
-}
+  products: initial(),
+};  
 
-export const loadClothesreducer = (state, action) => {
-    switch (action.type) {
-    case LOAD_CLOTHES:
-      return {
-        ...state,
-        clothes: [...state.clothes, ...action.payload],
-      };
+export const productReducer = (state, action) => {
+  switch (action.type) {
+    case LOAD_PRODUCTS:
+      if (state.products.length < 20) {
+        return {
+          ...state,
+          products: [...state.products, ...action.payload],
+        };
+      } else {
+        return state;
+      }
 
     default:
       return state;

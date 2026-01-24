@@ -1,14 +1,12 @@
-import { useState } from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { Home } from "./pages/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Shop } from "./pages/Shop";
 import { WebLayout } from "./layouts/WebLayout";
+import { ProductProvider } from "./ProductContext";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+function AppContent() {
   return (
     <>
       <ToastContainer />
@@ -30,4 +28,12 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ProductProvider>
+      <AppContent />
+    </ProductProvider>
+  );
+}
+
+
