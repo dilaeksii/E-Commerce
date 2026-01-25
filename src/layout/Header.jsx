@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Menu, Phone } from "lucide-react";
 import {
   FaCaretDown,
   FaFacebook,
@@ -15,7 +15,7 @@ import {
 export const Header = () => {
   return (
     <div>
-      <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between">
+      <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between max-sm:hidden">
         <div className="flex gap-[10px]">
           <div className="flex gap-[5px] h-[44px] w-[145px]">
             <Phone className="text-[#FFFFFF]" />
@@ -55,7 +55,7 @@ export const Header = () => {
         <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
           Bandage
         </p>
-        <div className="flex justify-between gap-[15px]">
+        <div className="flex justify-between gap-[15px] max-sm:hidden">
           <a
             href="/"
             className="font-bold text-sm leading-[24px] text-[#737373]"
@@ -124,8 +124,8 @@ export const Header = () => {
           </a>
         </div>
         <div className="flex items-center gap-[15px]">
-          <div className="flex items-center gap-[5px]">
-            <FaUser className="text-[#23A6F0]"/>
+          <div className="flex items-center gap-[5px] max-sm:hidden">
+            <FaUser className="text-[#23A6F0]" />
             <a
               href="/login"
               className="font-bold text-sm leading-[24px] text-[#23A6F0]"
@@ -133,29 +133,68 @@ export const Header = () => {
               Login/Register
             </a>
           </div>
-          <a
+          <div>
+            <a
               href="/search"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+              className="font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:text-xl"
             >
               <FaSearch />
             </a>
-            <div className="flex items-center gap-[5px]">
-              <a
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <a
+              href="/bag"
+              className="font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:text-xl"
+            >
+              <FaShoppingCart />
+            </a>{" "}
+            <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
+              1
+            </span>
+          </div>
+          <div className="flex items-center gap-[5px] max-sm:hidden">
+            <a
               href="/bag"
               className="font-bold text-sm leading-[24px] text-[#23A6F0]"
             >
-              <FaShoppingCart /> 
-            </a> <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">1</span>
-            </div>
-            <div className="flex items-center gap-[5px]">
-              <a
+              <FaHeart />
+            </a>{" "}
+            <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
+              1
+            </span>
+          </div>
+          <div className=" hidden flex items-center gap-[5px] max-sm:flex">
+            <a
               href="/bag"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+              className="font-bold text-sm leading-[24px] text-[#252B42]"
             >
-              <FaHeart /> 
-            </a> <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">1</span>
-            </div>
+              <Menu />
+            </a>
+          </div>
         </div>
+      </div>
+      <div className="hidden flex justify-between gap-[15px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-8 max-sm:my-5">
+        <a href="/" className="font-bold text-xl leading-[24px] text-[#737373]">
+          Home
+        </a>
+        <a
+          href="/product"
+          className="font-bold text-xl leading-[24px] text-[#737373]"
+        >
+          Product
+        </a>
+        <a
+          href="/pricing"
+          className="font-bold text-xl leading-[24px] text-[#737373]"
+        >
+          Pricing
+        </a>
+        <a
+          href="/contact"
+          className="font-bold text-xl leading-[24px] text-[#737373]"
+        >
+          Contact
+        </a>
       </div>
     </div>
   );

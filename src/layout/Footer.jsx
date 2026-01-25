@@ -4,7 +4,7 @@ export const Footer = () => {
   return (
     <>
       <div className="bg-[#FAFAFA] h-[142px] w-full">
-        <div className="py-[40px] flex justify-around items-center">
+        <div className="py-[40px] flex justify-around items-center max-sm:flex-col max-sm:items-start max-sm:gap-5 max-sm:ml-10">
           <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
             Bandage
           </p>
@@ -16,7 +16,7 @@ export const Footer = () => {
         </div>
       </div>
       <div>
-        <div className="flex py-[40px] justify-around">
+        <div className="flex py-[40px] justify-around max-sm:flex-col max-sm:ml-10 max-sm:gap-10">
           <div>
             <p className="text-base text-[#252B42] font-bold leading-[24px] py-[10px]">
               Company Info
@@ -155,11 +155,11 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#FAFAFA] w-full">
-          <p className="text-[#737373] font-bold text-sm leading-[24px] py-[25px] pl-[70px]">
+      <div className="bg-[#FAFAFA] w-full ">
+          <p className="text-[#737373] font-bold text-sm leading-[24px] py-[25px] pl-[70px] max-sm:text-center max-sm:w-[300px] max-sm:text-wrap">
             Made With Love By Finland All Right Reserved 
           </p>
-        </div>
+      </div>
     </>
   );
 };
