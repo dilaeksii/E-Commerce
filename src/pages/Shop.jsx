@@ -49,7 +49,7 @@ export const Shop = () => {
             ))}
         </div>
       </div>
-      <div>deneme</div>
+      <div></div>
     </div>
   );
 };
