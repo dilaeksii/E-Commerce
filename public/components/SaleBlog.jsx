@@ -1,7 +1,9 @@
 import { Download, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { FaStar } from "react-icons/fa";
+import { useLikes } from "../../src/LikeContext";
 
 export const SaleBlog = ({ card }) => {
+  const {state, likePro} = useLikes();
   return (
     <div className="w-[501px] h-[404px] max-sm:w-[330px] max-sm:h-[606px] max-sm:mx-4">
       <div className="grid grid-cols-2 max-sm:grid-cols-1">
@@ -14,8 +16,8 @@ export const SaleBlog = ({ card }) => {
           </p>
           
           <div className="flex justify-around place-items-end pb-2 max-sm:hidden">
-            <button className="bg-[#FFFFFF] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
-              <Heart className="w-[17] h-[16]" />
+            <button className="bg-[#FFFFFF] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center" onClick={() => likePro(card.id)}>
+              <Heart className={`${state.liked ? "text-red-500" : ""} w-[17] h-[16]`}/>
             </button>
             <button className="bg-[#FFFFFF] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
               <ShoppingCart className="w-[17] h-[16]" />

@@ -11,8 +11,15 @@ import {
   FaUser,
   FaYoutube,
 } from "react-icons/fa";
+import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import { useLikes } from "../LikeContext";
+
 
 export const Header = () => {
+
+  let match = useRouteMatch("/shop");
+  const {state} = useLikes();
+
   return (
     <div>
       <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between max-sm:hidden">
@@ -56,145 +63,175 @@ export const Header = () => {
           Bandage
         </p>
         <div className="flex justify-between gap-[15px] max-sm:hidden">
-          <a
-            href="/"
-            className="font-bold text-sm leading-[24px] text-[#737373]"
+          <NavLink
+            to="/home"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
           >
             Home
-          </a>
+          </NavLink>
           <div className="relative group">
             <button
               type="button"
-              className="flex items-center gap-2 font-bold text-sm leading-[24px] text-[#737373]"
+              className={`flex items-center gap-2 font-bold text-sm leading-[24px] ${match ? "text-[#252B42]" : "text-[#737373]"}`}
             >
               Shop
               <FaCaretDown className="shrink-0" />
             </button>
 
             <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg z-50">
-              <a
+              <Link
                 className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                href="/shop"
+                to="/shop"
               >
                 Clothes
-              </a>
-              <a
+              </Link>
+              <Link
                 className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                href="/shop"
+                to="/shop"
               >
                 Shoes
-              </a>
-              <a
+              </Link>
+              <Link
                 className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                href="/shop"
+                to="/shop"
               >
                 Accessories
-              </a>
-              <a
+              </Link>
+              <Link
                 className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                href="/shop"
+                to="/shop"
               >
                 Sport
-              </a>
+              </Link>
             </div>
           </div>
-          <a
-            href="/about"
-            className="font-bold text-sm leading-[24px] text-[#737373]"
+          <NavLink
+            to="/about"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
           >
             About
-          </a>
-          <a
-            href="/blog"
-            className="font-bold text-sm leading-[24px] text-[#737373]"
+          </NavLink>
+          <NavLink
+            to="/blog"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
           >
             Blog
-          </a>
-          <a
-            href="/contact"
-            className="font-bold text-sm leading-[24px] text-[#737373]"
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
           >
             Contact
-          </a>
-          <a
-            href="/pages"
-            className="font-bold text-sm leading-[24px] text-[#737373]"
+          </NavLink>
+          <NavLink
+            to="/pages"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
           >
             Pages
-          </a>
+          </NavLink>
         </div>
         <div className="flex items-center gap-[15px]">
           <div className="flex items-center gap-[5px] max-sm:hidden">
             <FaUser className="text-[#23A6F0]" />
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="font-bold text-sm leading-[24px] text-[#23A6F0]"
             >
               Login/Register
-            </a>
+            </Link>
           </div>
           <div>
-            <a
-              href="/search"
+            <Link
+              to="/search"
               className="font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:text-xl"
             >
               <FaSearch />
-            </a>
+            </Link>
           </div>
           <div className="flex items-center gap-[5px]">
-            <a
-              href="/bag"
+            <Link
+              to="/bag"
               className="font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:text-xl"
             >
               <FaShoppingCart />
-            </a>{" "}
+            </Link>{" "}
             <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
               1
             </span>
           </div>
           <div className="flex items-center gap-[5px] max-sm:hidden">
-            <a
-              href="/bag"
+            <Link
+              to="/bag"
               className="font-bold text-sm leading-[24px] text-[#23A6F0]"
             >
               <FaHeart />
-            </a>{" "}
+            </Link>{" "}
             <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
-              1
+              {state.count}
             </span>
           </div>
           <div className=" hidden flex items-center gap-[5px] max-sm:flex">
-            <a
-              href="/bag"
+            <Link
+              to="/menu"
               className="font-bold text-sm leading-[24px] text-[#252B42]"
             >
               <Menu />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
       <div className="hidden flex justify-between gap-[15px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-8 max-sm:my-5">
-        <a href="/" className="font-bold text-xl leading-[24px] text-[#737373]">
+        <NavLink
+          to="/home"
+          className="font-bold text-xl leading-[24px]"
+          style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+        >
           Home
-        </a>
-        <a
-          href="/product"
-          className="font-bold text-xl leading-[24px] text-[#737373]"
+        </NavLink>
+        <NavLink
+          to="/product"
+          className="font-bold text-xl leading-[24px]"
+          style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
         >
           Product
-        </a>
-        <a
-          href="/pricing"
-          className="font-bold text-xl leading-[24px] text-[#737373]"
+        </NavLink>
+        <NavLink
+          to="/pricing"
+          className="font-bold text-xl leading-[24px]"
+          style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
         >
           Pricing
-        </a>
-        <a
-          href="/contact"
-          className="font-bold text-xl leading-[24px] text-[#737373]"
+        </NavLink>
+        <NavLink
+          to="/contact"
+          className="font-bold text-xl leading-[24px]"
+          style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
         >
           Contact
-        </a>
+        </NavLink>
       </div>
     </div>
   );

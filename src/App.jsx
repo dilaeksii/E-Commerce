@@ -5,24 +5,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Shop } from "./pages/Shop";
 import { WebLayout } from "./layouts/WebLayout";
 import { ProductProvider } from "./ProductContext";
+import { Redirect } from "react-router-dom";
+import { LikeProvider } from "./LikeContext";
 
 function AppContent() {
   return (
     <>
       <ToastContainer />
       <Router>
-        <Switch>
-          <WebLayout>
-            <Route exact path="/">
+        <WebLayout>
+          <Switch>
+            <Redirect exact from="/" to="/home" />
+            <Route path="/home">
               <Home />
             </Route>
-          </WebLayout>
-          <WebLayout>
             <Route path="/shop">
               <Shop />
             </Route>
-          </WebLayout>
-        </Switch>
+          </Switch>
+        </WebLayout>
       </Router>
     </>
   );
@@ -30,10 +31,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ProductProvider>
-      <AppContent />
-    </ProductProvider>
+    <LikeProvider>
+      <ProductProvider>
+        <AppContent />
+      </ProductProvider>
+    </LikeProvider>
   );
 }
-
-
