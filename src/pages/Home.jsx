@@ -9,7 +9,7 @@ import { useProducts } from "../ProductContext";
 
 export const Home = () => {
   const { products, loadMore } = useProducts();
-
+  console.log("HOME products length:", products.length);
   return (
     <>
       <div className="grid place-items-center my-10 max-sm:hidden">

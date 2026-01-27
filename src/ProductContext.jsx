@@ -4,7 +4,7 @@ import { loadProducts } from "../public/store/action";
 
 const ProductContext = createContext();
 
-export const ProductProvider = ({ children }) => {
+export const ProductProvider = ({ children, initialCount = 10 }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
 
   const loadMore = () => dispatch(loadProducts());

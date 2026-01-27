@@ -5,8 +5,8 @@ export const createProduct = () => ({
   imageId: Math.floor(Math.random() * 7) + 1,
   title: "Graphic Design",
   department: "English Department",
-  price: 16.48,
-  salePrice: 6.48,
+  price: "$16.48",
+  salePrice: "$6.48",
 });
 
 

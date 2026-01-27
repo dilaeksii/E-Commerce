@@ -16,7 +16,7 @@ export const SaleBlog = ({ card }) => {
           </p>
           
           <div className="flex justify-around place-items-end pb-2 max-sm:hidden">
-            <button className="bg-[#FFFFFF] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center" onClick={() => likePro(card.id)}>
+            <button className="bg-[#FFFFFF] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
               <Heart className={`${state.liked ? "text-red-500" : ""} w-[17] h-[16]`}/>
             </button>
             <button className="bg-[#FFFFFF] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
