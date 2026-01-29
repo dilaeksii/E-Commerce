@@ -7,6 +7,7 @@ import { WebLayout } from "./layouts/WebLayout";
 import { ProductProvider } from "./ProductContext";
 import { Redirect } from "react-router-dom";
 import { LikeProvider } from "./LikeContext";
+import { ProductDetail } from "./pages/ProductDetail";
 
 function AppContent() {
   return (
@@ -15,6 +16,9 @@ function AppContent() {
       <Router>
         <WebLayout>
           <Switch>
+            <Route path="/product/:imageId">
+              <ProductDetail />
+            </Route>
             <Redirect exact from="/" to="/home" />
             <Route path="/home">
               <Home />

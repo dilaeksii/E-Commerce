@@ -1,8 +1,10 @@
+import { useHistory } from "react-router-dom";
 
 
 export const ProductCard = ({product}) => {
+    let history = useHistory();
 
-    return (<div>
+    return (<div onClick={() => history.push(`/product/${product.imageId}`)}>
         <img src={`/images/clothes${product.imageId}.jpg`} alt="" />
         <div className="flex flex-col items-center">
             <p className="text-[#252B42] text-base leading-[24px]">{product.title}</p>

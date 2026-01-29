@@ -55,7 +55,7 @@ export const Shop = () => {
   return (
     <div>
       <div className="bg-[#FAFAFA]">
-        <div className="flex justify-between px-[38px] py-10">
+        <div className="flex justify-between px-[38px] py-10 max-sm:flex-col max-sm:py-5 max-sm:gap-[30px] max-sm:items-center">
           <p className="font-bold text-[#252B42] text-2xl tracking-[0.1px] leading-[32px]">
             Shop
           </p>
@@ -88,13 +88,13 @@ export const Shop = () => {
             })}
           </div>
         </div>
-        <div className="flex justify-around px-[38px] pb-8">
+        <div className="flex justify-around px-[38px] pb-8 max-sm:flex-col max-sm:items-center max-sm:gap-5">
           {linkedCard.map((card, index) => (
             <LinkedCards key={index} card={card} />
           ))}
         </div>
       </div>
-      <div className="py-5 px-5 flex justify-between">
+      <div className="py-5 px-5 flex justify-between max-sm:flex-col max-sm:items-center max-sm:gap-5">
         <p>Showing all {currentItems.length} products </p>
         <div className="flex gap-3 items-center">
           <p className="text-[#737373] font-bold text-sm">Views: </p>
@@ -111,7 +111,7 @@ export const Shop = () => {
             <List className="text-[#ECECEC]" />
           </button>
         </div>
-        <div className="flex items-center justify-between gap-5">
+        <div className="flex items-center justify-between gap-5 max-sm:justify-around max-sm:gap-3">
           <div className="relative group">
             <button
               type="button"
@@ -149,12 +149,12 @@ export const Shop = () => {
           </button>
         </div>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center py-5">
         <div
-          className={
-            isList
-              ? "flex flex-col gap-5"
-              : "py-15 grid grid-cols-4 gap-4 px-30"
+          className={`max-sm:grid max-sm:grid-cols-1 max-sm:gap-10 max-sm:px-5
+            ${isList
+              ? "lg:flex lg:flex-col lg:gap-5"
+              : "lg:py-15 lg:grid lg:grid-cols-4 lg:gap-4 lg:px-30"}`
           }
         >
           {currentItems.map((product, index) => (

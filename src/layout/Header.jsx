@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Mail, Menu, Phone } from "lucide-react";
 import {
   FaCaretDown,
@@ -14,11 +13,10 @@ import {
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
 import { useLikes } from "../LikeContext";
 
-
 export const Header = () => {
-
-  let match = useRouteMatch("/shop");
-  const {state} = useLikes();
+  let shop = useRouteMatch("/shop");
+  let home = useRouteMatch("/home");
+  const { state } = useLikes();
 
   return (
     <div>
@@ -75,7 +73,7 @@ export const Header = () => {
           <div className="relative group">
             <button
               type="button"
-              className={`flex items-center gap-2 font-bold text-sm leading-[24px] ${match ? "text-[#252B42]" : "text-[#737373]"}`}
+              className={`flex items-center gap-2 font-bold text-sm leading-[24px] ${shop ? "text-[#252B42]" : "text-[#737373]"}`}
             >
               Shop
               <FaCaretDown className="shrink-0" />
@@ -158,7 +156,7 @@ export const Header = () => {
           <div>
             <Link
               to="/search"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:text-xl"
+              className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home ? "text-xl" : "hidden"}`}
             >
               <FaSearch />
             </Link>
@@ -166,7 +164,7 @@ export const Header = () => {
           <div className="flex items-center gap-[5px]">
             <Link
               to="/bag"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:text-xl"
+              className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home ? "text-xl" : "hidden"}`}
             >
               <FaShoppingCart />
             </Link>{" "}
@@ -195,44 +193,151 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <div className="hidden flex justify-between gap-[15px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-8 max-sm:my-5">
-        <NavLink
-          to="/home"
-          className="font-bold text-xl leading-[24px]"
-          style={(isActive) => ({
+      {home && (
+        <div className="hidden flex justify-between gap-[15px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-8 max-sm:my-5">
+          <NavLink
+            to="/home"
+            className="font-bold text-xl leading-[24px]"
+            style={(isActive) => ({
               color: isActive ? "#252B42" : "#737373",
             })}
-        >
-          Home
-        </NavLink>
-        <NavLink
-          to="/product"
-          className="font-bold text-xl leading-[24px]"
-          style={(isActive) => ({
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/product"
+            className="font-bold text-xl leading-[24px]"
+            style={(isActive) => ({
               color: isActive ? "#252B42" : "#737373",
             })}
-        >
-          Product
-        </NavLink>
-        <NavLink
-          to="/pricing"
-          className="font-bold text-xl leading-[24px]"
-          style={(isActive) => ({
+          >
+            Product
+          </NavLink>
+          <NavLink
+            to="/pricing"
+            className="font-bold text-xl leading-[24px]"
+            style={(isActive) => ({
               color: isActive ? "#252B42" : "#737373",
             })}
-        >
-          Pricing
-        </NavLink>
-        <NavLink
-          to="/contact"
-          className="font-bold text-xl leading-[24px]"
-          style={(isActive) => ({
+          >
+            Pricing
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className="font-bold text-xl leading-[24px]"
+            style={(isActive) => ({
               color: isActive ? "#252B42" : "#737373",
             })}
-        >
-          Contact
-        </NavLink>
-      </div>
+          >
+            Contact
+          </NavLink>
+        </div>
+      )}{" "}
+      {/**Home Page Menus */}
+      {shop && (
+        <div className=" hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5">
+          <NavLink
+            to="/home"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/shop"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            Shop
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            About
+          </NavLink>
+          <NavLink
+            to="/blog"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            Blog
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            Contact
+          </NavLink>
+          <NavLink
+            to="/pages"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            Pages
+          </NavLink>
+        </div>
+      )}{" "}
+      {/**Shop Page Menus */}
+      {shop && (
+        <div className="hidden max-sm:flex max-sm:flex-col max-sm:gap-3 max-sm:py-5 max-sm:items-center">
+          <div className="flex items-center gap-[5px]">
+            <FaUser className="text-[#23A6F0]" />
+            <Link
+              to="/login"
+              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+            >
+              Login/Register
+            </Link>
+          </div>
+          <div>
+            <Link
+              to="/search"
+              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+            >
+              <FaSearch />
+            </Link>
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <Link
+              to="/bag"
+              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+            >
+              <FaShoppingCart />
+            </Link>{" "}
+            <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
+              1
+            </span>
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <Link
+              to="/bag"
+              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+            >
+              <FaHeart />
+            </Link>{" "}
+            <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
+              1
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
