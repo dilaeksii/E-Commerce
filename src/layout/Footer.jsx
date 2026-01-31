@@ -1,9 +1,14 @@
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { useRouteMatch, useParams } from "react-router-dom";
+
+
 
 export const Footer = () => {
+  const {imageId} = useParams();
+  const product = useRouteMatch();
   return (
     <>
-      <div className="bg-[#FAFAFA] h-[142px] w-full">
+      <div className={`${product ? "" : "bg-[#FAFAFA]"} h-[142px] w-full`}>
         <div className="py-[40px] flex justify-around items-center max-sm:flex-col max-sm:items-start max-sm:gap-5 max-sm:ml-10">
           <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
             Bandage
