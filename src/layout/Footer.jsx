@@ -1,11 +1,11 @@
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import { useRouteMatch, useParams } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
 
 
 export const Footer = () => {
-  const {imageId} = useParams();
-  const product = useRouteMatch();
+
+  const product = useRouteMatch("/product/:imageId");
   return (
     <>
       <div className={`${product ? "" : "bg-[#FAFAFA]"} h-[142px] w-full`}>

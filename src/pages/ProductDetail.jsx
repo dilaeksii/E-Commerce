@@ -41,8 +41,8 @@ export const ProductDetail = () => {
 
   return (
     <div>
-      <div className="bg-[#FAFAFA] py-10 px-[38px]">
-        <div className="pt-3 pb-10">
+      <div className="bg-[#FAFAFA] py-10 px-[38px] max-sm:px-4">
+        <div className="pt-3 pb-10 max-sm:flex max-sm:items-center max-sm:justify-center">
           <Link to="/home">Home</Link> {" > "}
           <Link to="/shop">Shop</Link>
           {path.map((p, i) => {
@@ -69,9 +69,9 @@ export const ProductDetail = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-2 w-[1050px] gap-10">
+        <div className="grid grid-cols-2 w-[1050px] gap-10 max-sm:w-[348px] max-sm:flex max-sm:flex-col max-sm:justify-center">
           <div>
-            <div className="relative w-[506px]">
+            <div className="relative w-[506px] max-sm:w-[348px]">
               {" "}
               {/*Slider container*/}
               <div className="">
@@ -133,7 +133,7 @@ export const ProductDetail = () => {
                 In Stock
               </p>
             </div>
-            <p className="text-[#858585] text-sm font-base leading-[20px] tracking-[0.2px] w-[445px] border-b pb-10">
+            <p className="text-[#858585] text-sm font-base leading-[20px] tracking-[0.2px] w-[445px] border-b pb-10 max-sm:w-[271px]">
               Met minim Mollie non desert Alamo est sit cliquey dolor do met
               sent. RELIT official consequent door ENIM RELIT Mollie. Excitation
               venial consequent sent nostrum met.
@@ -163,8 +163,8 @@ export const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <div className="py-8 px-[38px] flex flex-col items-center">
-        <div className="flex justify-around border-b w-[1051px] border-[#737373]">
+      <div className="py-8 px-[38px] flex flex-col items-center max-sm:px-4">
+        <div className="flex justify-around border-b w-[1051px] border-[#737373] max-sm:w-[372px] max-sm:border-none">
           <a
             href="#"
             className="text-[#737373] font-bold text-sm leading-[24px] tracking-[0.2px]"
@@ -184,7 +184,7 @@ export const ProductDetail = () => {
             Reviews <span className="text-[#23856D]">(0)</span>
           </a>
         </div>
-        <div className="grid grid-cols-3 gap-10 py-10">
+        <div className="grid grid-cols-3 gap-10 py-10 max-sm:grid-cols-1">
           <div className="bg-[url(/images/detail1.jpg)] bg-no-repeat bg-cover bg-center w-[332px] h-[392px] shadow-xl"></div>
           <div className="w-[332px] h-[392px]">
             <p className="text-[#252B42] text-2xl leading-[24px] tracking-[0.2px] font-bold py-5">
@@ -267,12 +267,17 @@ export const ProductDetail = () => {
         </div>
       </div>
       <div className="bg-[#FAFAFA]">
-        <div className="py-8 px-[38px] flex flex-col items-center">
-          <div className="border-b w-[1051px] border-[#737373] py-5">
+        <div className="py-8 px-[38px] flex flex-col items-center max-sm:px-4">
+          <div className="border-b w-[1051px] border-[#737373] py-5 max-sm:flex max-sm:justify-center max-sm:w-[324px]">
                 <p className="text-[#252B42] font-bold text-2xl tracking-[0.1px] leading-[32px]">BESTSELLER PRODUCTS</p>
           </div>
-          <div className="grid grid-cols-4 grid-rows-2 gap-5 py-10 w-[1049px]">
+          <div className="grid grid-cols-4 grid-rows-2 gap-5 py-10 w-[1049px] max-sm:hidden">
                 {items.map((product,index) => (
+                  <ProductCard key={index} product={product} />
+                ))}
+          </div>
+          <div className="hidden max-sm:grid max-sm:grid-cols-1 max-sm:grid-rows-4 max-sm:w-[400px] max-sm:px-5 max-sm:py-10 max-sm:gap-5">
+                {items.slice(0, 4).map((product,index) => (
                   <ProductCard key={index} product={product} />
                 ))}
           </div>

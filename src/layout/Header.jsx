@@ -12,11 +12,13 @@ import {
 } from "react-icons/fa";
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
 import { useLikes } from "../LikeContext";
+import {  } from "react-router-dom/cjs/react-router-dom.min";
 
 export const Header = () => {
   let shop = useRouteMatch("/shop");
   let home = useRouteMatch("/home");
   const { state } = useLikes();
+  let product = useRouteMatch("/product/:imageId");
 
   return (
     <div>
@@ -234,7 +236,7 @@ export const Header = () => {
         </div>
       )}{" "}
       {/**Home Page Menus */}
-      {shop && (
+      {(shop || product)&& (
         <div className=" hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5">
           <NavLink
             to="/home"
@@ -295,7 +297,7 @@ export const Header = () => {
         </div>
       )}{" "}
       {/**Shop Page Menus */}
-      {shop && (
+      {(shop || product) && (
         <div className="hidden max-sm:flex max-sm:flex-col max-sm:gap-3 max-sm:py-5 max-sm:items-center">
           <div className="flex items-center gap-[5px]">
             <FaUser className="text-[#23A6F0]" />
