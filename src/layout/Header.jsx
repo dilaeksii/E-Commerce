@@ -1,4 +1,4 @@
-import { Mail, Menu, Phone } from "lucide-react";
+import { ArrowBigLeft, ArrowRight, Mail, Menu, Phone } from "lucide-react";
 import {
   FaCaretDown,
   FaFacebook,
@@ -12,53 +12,57 @@ import {
 } from "react-icons/fa";
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
 import { useLikes } from "../LikeContext";
-import {  } from "react-router-dom/cjs/react-router-dom.min";
+import {} from "react-router-dom/cjs/react-router-dom.min";
 
 export const Header = () => {
-  let shop = useRouteMatch("/shop");
-  let home = useRouteMatch("/home");
+  const shop = useRouteMatch("/shop");
+  const home = useRouteMatch("/home");
   const { state } = useLikes();
-  let product = useRouteMatch("/product/:imageId");
+  const product = useRouteMatch("/product/:imageId");
+  const teams = useRouteMatch("/team");
+  const contact = useRouteMatch("/contact");
 
   return (
     <div>
-      <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between max-sm:hidden">
-        <div className="flex gap-[10px]">
-          <div className="flex gap-[5px] h-[44px] w-[145px]">
-            <Phone className="text-[#FFFFFF]" />
-            <a
-              href="tel:+902255550118"
-              className="text-[#FFFFFF] font-bold text-sm leading-[24px]"
-            >
-              (225) 555-0118
-            </a>
+      {!teams && !contact &&(
+        <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between max-sm:hidden">
+          <div className="flex gap-[10px]">
+            <div className="flex gap-[5px] h-[44px] w-[145px]">
+              <Phone className="text-[#FFFFFF]" />
+              <a
+                href="tel:+902255550118"
+                className="text-[#FFFFFF] font-bold text-sm leading-[24px]"
+              >
+                (225) 555-0118
+              </a>
+            </div>
+            <div className="flex gap-[5px] h-[44px] w-[145px]">
+              <Mail className="text-[#FFFFFF] shrink-0" />
+              <a
+                href="mailto:michelle.rivera@example.com"
+                className="text-[#FFFFFF] font-bold text-sm leading-[24px]"
+              >
+                michelle.rivera@example.com
+              </a>
+            </div>
           </div>
-          <div className="flex gap-[5px] h-[44px] w-[145px]">
-            <Mail className="text-[#FFFFFF] shrink-0" />
-            <a
-              href="mailto:michelle.rivera@example.com"
-              className="text-[#FFFFFF] font-bold text-sm leading-[24px]"
-            >
-              michelle.rivera@example.com
-            </a>
-          </div>
-        </div>
-        <p className="text-[#FFFFFF] font-bold text-sm leading-[24px]">
-          Follow Us and get a chance to win 80% off
-        </p>
-        <div className="flex justify-between h-[26px] items-center gap-[10px]">
           <p className="text-[#FFFFFF] font-bold text-sm leading-[24px]">
-            Follow Us :
+            Follow Us and get a chance to win 80% off
           </p>
-          <div className="flex gap-[15px]">
-            <FaInstagram className="text-[#FFFFFF]" />
-            <FaYoutube className="text-[#FFFFFF]" />
-            <FaFacebook className="text-[#FFFFFF]" />
-            <FaTwitter className="text-[#FFFFFF]" />
+          <div className="flex justify-between h-[26px] items-center gap-[10px]">
+            <p className="text-[#FFFFFF] font-bold text-sm leading-[24px]">
+              Follow Us :
+            </p>
+            <div className="flex gap-[15px]">
+              <FaInstagram className="text-[#FFFFFF]" />
+              <FaYoutube className="text-[#FFFFFF]" />
+              <FaFacebook className="text-[#FFFFFF]" />
+              <FaTwitter className="text-[#FFFFFF]" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="py-[20px] px-[38px] flex justify-between">
+      )}
+      <div className={`py-[20px] px-[38px] flex justify-between ${contact ? "max-sm:bg-[#F6F6F6]" : ""}`}>
         <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
           Bandage
         </p>
@@ -136,6 +140,15 @@ export const Header = () => {
             Contact
           </NavLink>
           <NavLink
+            to="/team"
+            className="font-bold text-sm leading-[24px]"
+            style={(isActive) => ({
+              color: isActive ? "#252B42" : "#737373",
+            })}
+          >
+            Team
+          </NavLink>
+          <NavLink
             to="/pages"
             className="font-bold text-sm leading-[24px]"
             style={(isActive) => ({
@@ -145,55 +158,100 @@ export const Header = () => {
             Pages
           </NavLink>
         </div>
-        <div className="flex items-center gap-[15px]">
-          <div className="flex items-center gap-[5px] max-sm:hidden">
-            <FaUser className="text-[#23A6F0]" />
+        {!teams && !contact &&(
+          <div className="flex items-center gap-[15px]">
+            <div className="flex items-center gap-[5px] max-sm:hidden">
+              <FaUser className="text-[#23A6F0]" />
+              <Link
+                to="/login"
+                className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+              >
+                Login/Register
+              </Link>
+            </div>
+            <div>
+              <Link
+                to="/search"
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams ? "text-xl" : "hidden"}`}
+              >
+                <FaSearch />
+              </Link>
+            </div>
+            <div className="flex items-center gap-[5px]">
+              <Link
+                to="/bag"
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams ? "text-xl" : "hidden"}`}
+              >
+                <FaShoppingCart />
+              </Link>{" "}
+              <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
+                1
+              </span>
+            </div>
+            <div className="flex items-center gap-[5px] max-sm:hidden">
+              <Link
+                to="/bag"
+                className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+              >
+                <FaHeart />
+              </Link>{" "}
+              <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
+                {state.count}
+              </span>
+            </div>
+            <div className=" hidden flex items-center gap-[5px] max-sm:flex">
+              <Link
+                to="/menu"
+                className="font-bold text-sm leading-[24px] text-[#252B42]"
+              >
+                <Menu />
+              </Link>
+            </div>
+          </div>
+        )}
+        {(teams || contact) && (
+          <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+              className="text-[#23A6F0] font-bold text-sm leading-[22px] tracking-[0.2px]"
             >
-              Login/Register
+              Login
             </Link>
+            <button className="bg-[#23A6F0] rounded-md text-[#FFFFFF] w-[214px] flex items-center justify-around py-1 px-[20px]">
+              Become a Member
+              <ArrowRight className="text-[#FFFFFF]" />
+            </button>
           </div>
-          <div>
-            <Link
-              to="/search"
-              className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home ? "text-xl" : "hidden"}`}
-            >
-              <FaSearch />
-            </Link>
+        )}
+        {(teams || contact) && (
+          <div className="hidden max-sm:flex max-sm:items-center max-sm:gap-[15px]">
+            <div>
+              <Link
+                to="/search"
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact ? "text-xl" : "hidden"}`}
+              >
+                <FaSearch />
+              </Link>
+            </div>
+            <div className="flex items-center gap-[5px]">
+              <Link
+                to="/bag"
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact ? "text-xl" : "hidden"}`}
+              >
+                <FaShoppingCart />
+              </Link>
+            </div>
+
+            <div className=" hidden flex items-center gap-[5px] max-sm:flex">
+              <Link
+                to="/menu"
+                className="font-bold text-sm leading-[24px] text-[#252B42]"
+              >
+                <Menu />
+              </Link>
+            </div>
           </div>
-          <div className="flex items-center gap-[5px]">
-            <Link
-              to="/bag"
-              className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home ? "text-xl" : "hidden"}`}
-            >
-              <FaShoppingCart />
-            </Link>{" "}
-            <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
-              1
-            </span>
-          </div>
-          <div className="flex items-center gap-[5px] max-sm:hidden">
-            <Link
-              to="/bag"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
-            >
-              <FaHeart />
-            </Link>{" "}
-            <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
-              {state.count}
-            </span>
-          </div>
-          <div className=" hidden flex items-center gap-[5px] max-sm:flex">
-            <Link
-              to="/menu"
-              className="font-bold text-sm leading-[24px] text-[#252B42]"
-            >
-              <Menu />
-            </Link>
-          </div>
-        </div>
+        )}
       </div>
       {home && (
         <div className="hidden flex justify-between gap-[15px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-8 max-sm:my-5">
@@ -236,8 +294,8 @@ export const Header = () => {
         </div>
       )}{" "}
       {/**Home Page Menus */}
-      {(shop || product)&& (
-        <div className=" hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5">
+      {(shop || product || teams || contact) && (
+        <div className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${contact ? "max-sm:bg-[#F6F6F6]" : ""}`}>
           <NavLink
             to="/home"
             className="font-bold text-sm leading-[24px]"

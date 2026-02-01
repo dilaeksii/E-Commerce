@@ -9,37 +9,39 @@ import { Redirect } from "react-router-dom";
 import { LikeProvider } from "./LikeContext";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Contact } from "./pages/Contact";
-
+import { Team } from "./pages/Team";
 
 function AppContent() {
   return (
     <>
-  <ToastContainer />
-  <Router>
-    <Switch>
-      <Route path="/contact">
-        <Contact />
-      </Route>
-      <Route>
-        <WebLayout>
-          <Switch>
-            <Route path="/product/:imageId">
-              <ProductDetail />
-            </Route>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/shop">
-              <Shop />
-            </Route>
-            <Redirect exact from="/" to="/home" />
-          </Switch>
-        </WebLayout>
-      </Route>
-    </Switch>
-  </Router>
-</>
-
+      <ToastContainer />
+      <Router>
+        <Switch>
+          <Route>
+            <WebLayout>
+              <Switch>
+                <Route path="/product/:imageId">
+                  <ProductDetail />
+                </Route>
+                <Route path="/home">
+                  <Home />
+                </Route>
+                <Route path="/team">
+                  <Team />
+                </Route>
+                <Route path="/contact">
+                  <Contact />
+                </Route>
+                <Route path="/shop">
+                  <Shop />
+                </Route>
+                <Redirect exact from="/" to="/home" />
+              </Switch>
+            </WebLayout>
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 

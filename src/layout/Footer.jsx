@@ -6,9 +6,11 @@ import { useRouteMatch } from "react-router-dom";
 export const Footer = () => {
 
   const product = useRouteMatch("/product/:imageId");
+  const teams = useRouteMatch("/team");
+  const contact = useRouteMatch("/contact");
   return (
     <>
-      <div className={`${product ? "" : "bg-[#FAFAFA]"} h-[142px] w-full`}>
+      <div className={`${(product || teams || contact) ? "" : "bg-[#FAFAFA]"} h-[142px] w-full`}>
         <div className="py-[40px] flex justify-around items-center max-sm:flex-col max-sm:items-start max-sm:gap-5 max-sm:ml-10">
           <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
             Bandage

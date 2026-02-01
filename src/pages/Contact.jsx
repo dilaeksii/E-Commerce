@@ -1,34 +1,50 @@
-import { ContactCard } from "../../public/components/ContactCard";
-import { contactCard } from "../data/ContactCard";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 export const Contact = () => {
   return (
-    <section className="relative w-full min-h-screen bg-gradient-to-r from-[#022B36] via-[#0B6C7D] to-[#0FA3C6] max-sm:flex max-sm:flex-col">
-      <img
-        src="/images/shopcard2.jpg"
-        alt=""
-        className="absolute right-0 bottom-0 h-full object-cover [mask-image:linear-gradient(to_right,transparent,black_90%)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_90%)] z-0"
-      />
-      <div
-        className="absolute inset-0 flex flex-row justify-center items-center gap-20 z-10 max-sm:relative max-sm:flex-col max-sm:items-start max-sm:px-2 max-sm:py-10">
-        <div className="w-[367px] h-[234px] flex flex-col gap-8 items-start max-sm:items-center ">
-          <p className="text-[40px] font-bold text-[#FFFFFF] leading-[50px] tracking-[0.2px]">
-            CONTACT US
+    <div>
+      <div className="py-20 flex items-center">
+        <div className="absolute h-[518px] px-50 flex flex-col justify-start gap-5">
+          <p className="font-bold leading-[24px] tracking-[0.1px] text-[#252B42]">
+            Contact Us
           </p>
-          <p className="text-[#FFFFFF] leading-[20px] tracking-[0.2px] text-sm max-sm:text-center">
-            Problems trying to resolve the conflict between the two major realms
-            of Classical physics: Newtonian mechanics
+          <p className="w-[378px] font-bold leading-[80px] tracking-[0.2px] text-[#252B42] text-[58px]">
+            Get in touch today!
           </p>
-          <button className="bg-[#23A6F0] rounded-md text-[#FFFFFF] py-[15px] px-[40px]">
-            CONTACT US
-          </button>
+          <p className="text-2xl leading-[30px] tracking-[0.2px] text-[#737373] w-[376px]">
+            We know how large objects will act, but things on a small scale
+          </p>
+          <p className="font-bold text-2xl leading-[32px] tracking-[0.1px] text-[#252B42]">
+            Phone ; +451 215 215{" "}
+          </p>
+          <p className="font-bold text-2xl leading-[32px] tracking-[0.1px] text-[#252B42]">
+            Fax : +451 215 215
+          </p>
+          <div className="flex gap-[15px]">
+            <FaFacebook className="text-[#252B42]" />
+            <FaInstagram className="text-[#252B42]" />
+            <FaTwitter className="text-[#252B42]" />
+            <FaLinkedin className="text-[#252B42]" />
+          </div>
         </div>
-        <div className="grid grid-cols-2 grid-rows-2 gap-10 h-[533px] max-sm:grid-cols-1 max-sm:h-auto max-sm:w-full max-sm:place-items-center">
-          {contactCard.map((contact, index) => (
-            <ContactCard key={index} contact={contact} />
-          ))}
+        <div
+          className="relative h-[619px] w-[1292px]"
+          style={{
+            background: `radial-gradient(circle at 60% 8%, #FFE9EA 0 40px, transparent 41px), radial-gradient(circle at 78% 45%, #FFE9EA 0 250px, transparent 251px)`,
+          }}
+        >
+          <img
+            src="/images/contact.png"
+            alt=""
+            className="absolute right-[-180px] top-1/2 -translate-y-1/2 h-[650px] object-contain"
+          />
+        </div>
+        <div className="pointer-events-none absolute inset-0 z-20">
+          <span className="absolute right-[170px] top-[45%] w-[31px] h-[31px] bg-[#FFE9EA] rounded-full" />
+          <span className="absolute right-[150px] top-[35%] w-[15px] h-[15px] bg-[#977DF4] rounded-full" />
+          <span className="absolute left-[50%] top-[55%] w-[15px] h-[15px] bg-[#977DF4] rounded-full" />
         </div>
       </div>
-    </section>
+    </div>
   );
 };
