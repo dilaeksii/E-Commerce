@@ -10,6 +10,7 @@ import { LikeProvider } from "./LikeContext";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Contact } from "./pages/Contact";
 import { Team } from "./pages/Team";
+import { About } from "./pages/About";
 
 function AppContent() {
   return (
@@ -31,6 +32,9 @@ function AppContent() {
                 </Route>
                 <Route path="/contact">
                   <Contact />
+                </Route>
+                <Route path="/about">
+                  <About />
                 </Route>
                 <Route path="/shop">
                   <Shop />

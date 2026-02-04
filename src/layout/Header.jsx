@@ -21,6 +21,7 @@ export const Header = () => {
   const product = useRouteMatch("/product/:imageId");
   const teams = useRouteMatch("/team");
   const contact = useRouteMatch("/contact");
+  const about = useRouteMatch("/about");
 
   return (
     <div>
@@ -158,7 +159,7 @@ export const Header = () => {
             Pages
           </NavLink>
         </div>
-        {!teams && !contact &&(
+        {!teams && !contact && !about &&(
           <div className="flex items-center gap-[15px]">
             <div className="flex items-center gap-[5px] max-sm:hidden">
               <FaUser className="text-[#23A6F0]" />
@@ -209,7 +210,7 @@ export const Header = () => {
             </div>
           </div>
         )}
-        {(teams || contact) && (
+        {(teams || contact ) && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -223,12 +224,12 @@ export const Header = () => {
             </button>
           </div>
         )}
-        {(teams || contact) && (
+        {(teams || contact || about) && (
           <div className="hidden max-sm:flex max-sm:items-center max-sm:gap-[15px]">
             <div>
               <Link
                 to="/search"
-                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact ? "text-xl" : "hidden"}`}
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact || about ? "text-xl" : "hidden"}`}
               >
                 <FaSearch />
               </Link>
@@ -236,7 +237,7 @@ export const Header = () => {
             <div className="flex items-center gap-[5px]">
               <Link
                 to="/bag"
-                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact ? "text-xl" : "hidden"}`}
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact || about ? "text-xl" : "hidden"}`}
               >
                 <FaShoppingCart />
               </Link>
@@ -294,8 +295,8 @@ export const Header = () => {
         </div>
       )}{" "}
       {/**Home Page Menus */}
-      {(shop || product || teams || contact) && (
-        <div className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${contact ? "max-sm:bg-[#F6F6F6]" : ""}`}>
+      {(shop || product || teams || contact || about) && (
+        <div className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${(contact || about) ? "max-sm:bg-[#F6F6F6]" : ""}`}>
           <NavLink
             to="/home"
             className="font-bold text-sm leading-[24px]"
