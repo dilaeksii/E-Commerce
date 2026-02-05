@@ -25,7 +25,7 @@ export const Header = () => {
 
   return (
     <div>
-      {!teams && !contact &&(
+      {!teams && !contact && !about &&(
         <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between max-sm:hidden">
           <div className="flex gap-[10px]">
             <div className="flex gap-[5px] h-[44px] w-[145px]">
@@ -164,7 +164,7 @@ export const Header = () => {
             <div className="flex items-center gap-[5px] max-sm:hidden">
               <FaUser className="text-[#23A6F0]" />
               <Link
-                to="/login"
+                to="/signup"
                 className="font-bold text-sm leading-[24px] text-[#23A6F0]"
               >
                 Login/Register
@@ -210,7 +210,7 @@ export const Header = () => {
             </div>
           </div>
         )}
-        {(teams || contact ) && (
+        {(teams || contact || about ) && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -361,7 +361,7 @@ export const Header = () => {
           <div className="flex items-center gap-[5px]">
             <FaUser className="text-[#23A6F0]" />
             <Link
-              to="/login"
+              to="/signup"
               className="font-bold text-sm leading-[24px] text-[#23A6F0]"
             >
               Login/Register
