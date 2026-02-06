@@ -1,4 +1,4 @@
-import { LIKE, LOAD_PRODUCTS } from "./action";
+import { LOAD_PRODUCTS } from "./action";
 
 const imgId = () => Math.floor(Math.random() * 7) + 1;
 
@@ -37,17 +37,4 @@ export const productReducer = (state, action) => {
   }
 };
 
-export const likesReducer = (state = initialLikes, action) => {
-  switch (action.type) {
-    case LIKE:
-      return {
-        ...state,
-        liked: !state.liked,
-        count: state.liked ? state.count - 1 : state.count + 1,
-        
-      }
 
-    default:
-      return state;
-  }
-};

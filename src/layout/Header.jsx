@@ -11,13 +11,10 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
-import { useLikes } from "../LikeContext";
-import {} from "react-router-dom/cjs/react-router-dom.min";
 
 export const Header = () => {
   const shop = useRouteMatch("/shop");
   const home = useRouteMatch("/home");
-  const { state } = useLikes();
   const product = useRouteMatch("/product/:imageId");
   const teams = useRouteMatch("/team");
   const contact = useRouteMatch("/contact");
@@ -197,7 +194,7 @@ export const Header = () => {
                 <FaHeart />
               </Link>{" "}
               <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
-                {state.count}
+                1
               </span>
             </div>
             <div className=" hidden flex items-center gap-[5px] max-sm:flex">
@@ -218,10 +215,10 @@ export const Header = () => {
             >
               Login
             </Link>
-            <button className="bg-[#23A6F0] rounded-md text-[#FFFFFF] w-[214px] flex items-center justify-around py-1 px-[20px]">
+            <Link to="/signup" className="bg-[#23A6F0] rounded-md text-[#FFFFFF] w-[214px] flex items-center justify-around py-1 px-[20px]">
               Become a Member
               <ArrowRight className="text-[#FFFFFF]" />
-            </button>
+            </Link>
           </div>
         )}
         {(teams || contact || about) && (

@@ -6,7 +6,6 @@ import { Shop } from "./pages/Shop";
 import { WebLayout } from "./layouts/WebLayout";
 import { ProductProvider } from "./ProductContext";
 import { Redirect } from "react-router-dom";
-import { LikeProvider } from "./LikeContext";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Contact } from "./pages/Contact";
 import { Team } from "./pages/Team";
@@ -57,10 +56,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <LikeProvider>
-      <ProductProvider>
-        <AppContent />
-      </ProductProvider>
-    </LikeProvider>
+    <ProductProvider>
+      <AppContent />
+    </ProductProvider>
   );
 }
