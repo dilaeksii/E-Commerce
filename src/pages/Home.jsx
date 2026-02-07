@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../../public/components/Card";
 import { Clients } from "../../public/components/Clients";
 import { ProductCard } from "../../public/components/ProductCard";
@@ -5,11 +6,13 @@ import { SaleBlog } from "../../public/components/SaleBlog";
 import { ShopCards } from "../../public/components/ShopCards";
 import { homeCards } from "../data/HomeCard";
 import { saleCards } from "../data/SaleCard";
-import { useProducts } from "../ProductContext";
+import { loadProducts } from "../features/products/productSlice";
 
 export const Home = () => {
-  const { products, loadMore } = useProducts();
-  console.log("HOME products length:", products.length);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.products);
+  
+  
   return (
     <>
       <div className="grid place-items-center my-10 max-sm:hidden">
@@ -99,7 +102,7 @@ export const Home = () => {
         </div>
         <div className="flex justify-center relative z-50">
           <button
-            onClick={loadMore}
+            onClick={() => dispatch(loadProducts())}
             type="button"
             className="border border-[#23A6F0] text-[#23A6F0] rounded-sm py-[15px] px-[40px] text-sm font-bold leading-[22px] relative z-50"
           >

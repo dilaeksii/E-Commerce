@@ -10,6 +10,7 @@ import {
   FaUser,
   FaYoutube,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
 
 export const Header = () => {
@@ -20,6 +21,9 @@ export const Header = () => {
   const contact = useRouteMatch("/contact");
   const about = useRouteMatch("/about");
 
+  const likes = useSelector((state) => state.likes.value);
+  
+  
   return (
     <div>
       {!teams && !contact && !about &&(
@@ -194,7 +198,7 @@ export const Header = () => {
                 <FaHeart />
               </Link>{" "}
               <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
-                1
+                {likes}
               </span>
             </div>
             <div className=" hidden flex items-center gap-[5px] max-sm:flex">

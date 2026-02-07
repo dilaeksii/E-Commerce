@@ -4,7 +4,6 @@ import { Home } from "./pages/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Shop } from "./pages/Shop";
 import { WebLayout } from "./layouts/WebLayout";
-import { ProductProvider } from "./ProductContext";
 import { Redirect } from "react-router-dom";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Contact } from "./pages/Contact";
@@ -56,8 +55,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ProductProvider>
+    
       <AppContent />
-    </ProductProvider>
+    
   );
 }

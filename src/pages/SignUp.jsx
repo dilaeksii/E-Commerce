@@ -18,7 +18,7 @@ export const SignUp = () => {
   const password = watch("password");
   const role = watch("role_id");
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const base = {
       name: data.name,
       email: data.email,
@@ -39,7 +39,7 @@ export const SignUp = () => {
           }
         : base;
 
-    axios
+    await axios
       .post("https://workintech-fe-ecommerce.onrender.com/signup", null, {
         params: payload,
       })
@@ -72,9 +72,9 @@ export const SignUp = () => {
 
   return (
     <section className="bg-gradient-to-br from-[#EAF6FF] to-[#23A6F0] w-full min-h-screen py-5 max-sm:py-10 max-sm:px-3">
-      <div className="flex flex-col items-center justify-center">
-        <div className="max-w-md bg-[url(images/signup.avif)] bg-cover bg-bottom-left rounded-lg shadow border bg-[#23A6F0] border-[#23A6F0]">
-          <div className="p-20  space-y-4">
+      <div className="mx-auto flex min-h-screen w-full max-w-6xl overflow-hidden rounded-lg shadow">
+        <div className="w-1/2 bg-white p-10 max-sm:w-full">
+          <div className="p-20  space-y-4 max-sm:px-0">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900">
               Create an account
             </h1>
@@ -416,6 +416,10 @@ export const SignUp = () => {
             </form>
           </div>
         </div>
+        <div
+          className="w-1/2 bg-[url(/images/signup.avif)] bg-cover bg-no-repeat max-sm:hidden"
+          style={{ backgroundPosition: "8% 10%" }} // x% y% ile oynayacaksın
+        />
       </div>
     </section>
   );
