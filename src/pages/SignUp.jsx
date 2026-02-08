@@ -71,7 +71,7 @@ export const SignUp = () => {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-[#EAF6FF] to-[#23A6F0] w-full min-h-screen py-5 max-sm:py-10 max-sm:px-3">
+    <section className="bg-gradient-to-br from-[#EAF6FF] to-[#23A6F0] w-full min-h-screen max-sm:py-10 max-sm:px-3">
       <div className="mx-auto flex min-h-screen w-full max-w-6xl overflow-hidden rounded-lg shadow">
         <div className="w-1/2 bg-white p-10 max-sm:w-full">
           <div className="p-20  space-y-4 max-sm:px-0">
@@ -417,8 +417,7 @@ export const SignUp = () => {
           </div>
         </div>
         <div
-          className="w-1/2 bg-[url(/images/signup.avif)] bg-cover bg-no-repeat max-sm:hidden"
-          style={{ backgroundPosition: "8% 10%" }} // x% y% ile oynayacaksın
+          className="w-1/2 bg-[url(/images/signup.jpeg)] bg-center bg-cover bg-no-repeat max-sm:hidden"
         />
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export const Login = () => {
@@ -107,8 +108,7 @@ export const Login = () => {
           </div>
         </div>
         <div
-          className="w-1/2 bg-[url(/images/login.avif)] bg-cover bg-no-repeat max-sm:hidden"
-          style={{ backgroundPosition: "88% 40%" }} // x% y% ile oynayacaksın
+          className=" w-1/2 bg-[url(/images/login.png)] bg-cover bg-no-repeat bg-contain bg-center max-sm:hidden"
         />
       </div>
     </section>

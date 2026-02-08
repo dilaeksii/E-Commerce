@@ -11,6 +11,7 @@ import { Team } from "./pages/Team";
 import { About } from "./pages/About";
 import { SignUp } from "./pages/SignUp";
 import { Login } from "./pages/Login";
+import { Blog } from "./pages/Blog";
 
 function AppContent() {
   return (
@@ -23,6 +24,9 @@ function AppContent() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/blog">
+            <Blog />
           </Route>
           <WebLayout>
             <Switch>

@@ -2,17 +2,18 @@ import { Download, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../../src/features/likes/likeSlice";
+import { useRouteMatch } from "react-router-dom";
 
 
 export const SaleBlog = ({ card }) => {
 
   const dispatch = useDispatch();
   const liked = useSelector((state) => state.likes.liked);
-  
+  const blog = useRouteMatch("/blog");
   return (
     <div className="w-[501px] h-[404px] max-sm:w-[330px] max-sm:h-[606px] max-sm:mx-4">
       <div className="grid grid-cols-2 max-sm:grid-cols-1">
-        <div
+        {!blog && <div
           className="bg-no-repeat w-[209px] h-[404px] bg-center bg-cover grid grid-rows-2 content-between max-sm:hidden max-sm:w-[330px] max-sm:h-[300px]"
           style={{ backgroundImage: `url(${card.img})` }}
         >
@@ -31,8 +32,8 @@ export const SaleBlog = ({ card }) => {
               <Eye className="w-[17] h-[16]" />
             </button>
           </div>
-        </div>
-        <div className="py-10 flex flex-col gap-4 max-sm:hidden">
+        </div>}
+        {!blog && <div className="py-10 flex flex-col gap-4 max-sm:hidden">
           <div className="flex items-center justify-between">
             <p className="text-[#23A6F0] font-bold text-sm tracking-[0.2px] leading-[24px]">
               English Department
@@ -95,16 +96,69 @@ export const SaleBlog = ({ card }) => {
             <button className="text-[#23A6F0]">Learn More</button>
             <img src="/images/Vector3.svg" alt="" />
           </div>
-        </div>
-        <div
+        </div>}
+        {!blog && <div
           className=" hidden bg-no-repeat w-[330px] h-[300px] bg-center bg-cover grid grid-rows-2 content-between max-sm:inline-block"
           style={{ backgroundImage: `url(${card.mobil})` }}
         >
           <p className="text-[#FFFFFF] font-bold text-sm leading-[24px] tracking-[0.2px] text-center bg-[#E74040] border rounded-md border-[#E74040] h-[24px] w-[52px] px-[10px] mt-[10px] ml-[10px] max-sm:inline-block">
             New
           </p>
+        </div>}
+        {!blog && <div className="hidden py-10 flex flex-col gap-4 max-sm:flex">
+          <div className="flex justify-between w-[159px]">
+            <a
+              href="#"
+              className="text-xs tracking-[0.2px] text-[#737373] leading-[16px]"
+            >
+              Google
+            </a>
+            <a
+              href="#"
+              className="text-xs tracking-[0.2px] text-[#737373] leading-[16px]"
+            >
+              Trending
+            </a>
+            <a
+              href="#"
+              className="text-xs tracking-[0.2px] text-[#737373] leading-[16px]"
+            >
+              New
+            </a>
+          </div>
+          <p className="w-[247px] text-[#252B42] text-xl font-base tracking-[0.2px] leading-[30px]">
+            Loudest à la Madison #1 (L'integral)
+          </p>
+          <p className="w-[280px] text-[#737373] text-sm font-base tracking-[0.2px] leading-[20px] h-[60px]">
+            We focus on ergonomics and meeting you where you work. It's only a
+            keystroke away.
+          </p>
+          <div className="flex justify-between w-[280px]">
+            <div className="flex gap-1">
+              <img src="/images/icon cool-icon-1.svg" alt="" />
+              <p className="text-[#737373] text-xs leading-[16px] tracking-[0.2px]">
+                22h...
+              </p>
+            </div>
+            <div className="flex gap-1">
+              <img src="/images/Vector2.svg" alt="" />
+              <p className="text-[#737373] text-xs leading-[16px] tracking-[0.2px]">
+                Progress
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-between  w-[142px] h-[44px]">
+            <button className="text-[#23A6F0]">Learn More</button>
+            <img src="/images/Vector3.svg" alt="" />
+          </div>
+        </div>}
+        {blog && <div className="flex flex-col max-sm:hidden">
+        <div
+          className="bg-no-repeat w-[465px] h-[300px] bg-center bg-cover grid grid-rows-2 max-sm:hidden"
+          style={{ backgroundImage: `url(${card.img})` }}
+        >
         </div>
-        <div className="hidden py-10 flex flex-col gap-4 max-sm:flex">
+        <div className="py-10 flex flex-col gap-4 max-sm:hidden">
           <div className="flex justify-between w-[159px]">
             <a
               href="#"
@@ -151,6 +205,61 @@ export const SaleBlog = ({ card }) => {
             <img src="/images/Vector3.svg" alt="" />
           </div>
         </div>
+        </div>}
+        {blog && <div className="hidden flex flex-col max-sm:flex">
+        <div
+          className="bg-no-repeat w-[330px] h-[300px] bg-center bg-cover grid grid-rows-2 max-sm:pb-10"
+          style={{ backgroundImage: `url(${card.mobil})` }}
+        >
+        </div>
+        <div className="py-10 flex flex-col gap-4">
+          <div className="flex justify-between w-[159px]">
+            <a
+              href="#"
+              className="text-xs tracking-[0.2px] text-[#737373] leading-[16px]"
+            >
+              Google
+            </a>
+            <a
+              href="#"
+              className="text-xs tracking-[0.2px] text-[#737373] leading-[16px]"
+            >
+              Trending
+            </a>
+            <a
+              href="#"
+              className="text-xs tracking-[0.2px] text-[#737373] leading-[16px]"
+            >
+              New
+            </a>
+          </div>
+          <p className="w-[247px] text-[#252B42] text-xl font-base tracking-[0.2px] leading-[30px]">
+            Loudest à la Madison #1 (L'integral)
+          </p>
+          <p className="w-[280px] text-[#737373] text-sm font-base tracking-[0.2px] leading-[20px] h-[60px]">
+            We focus on ergonomics and meeting you where you work. It's only a
+            keystroke away.
+          </p>
+          <div className="flex justify-between w-[280px]">
+            <div className="flex gap-1">
+              <img src="/images/icon cool-icon-1.svg" alt="" />
+              <p className="text-[#737373] text-xs leading-[16px] tracking-[0.2px]">
+                22h...
+              </p>
+            </div>
+            <div className="flex gap-1">
+              <img src="/images/Vector2.svg" alt="" />
+              <p className="text-[#737373] text-xs leading-[16px] tracking-[0.2px]">
+                Progress
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-between  w-[142px] h-[44px]">
+            <button className="text-[#23A6F0]">Learn More</button>
+            <img src="/images/Vector3.svg" alt="" />
+          </div>
+        </div>
+        </div>}
       </div>
     </div>
   );

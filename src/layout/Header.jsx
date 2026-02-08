@@ -151,13 +151,13 @@ export const Header = () => {
             Team
           </NavLink>
           <NavLink
-            to="/pages"
+            to="/pricing"
             className="font-bold text-sm leading-[24px]"
             style={(isActive) => ({
               color: isActive ? "#252B42" : "#737373",
             })}
           >
-            Pages
+            Pricing
           </NavLink>
         </div>
         {!teams && !contact && !about &&(
@@ -346,13 +346,13 @@ export const Header = () => {
             Contact
           </NavLink>
           <NavLink
-            to="/pages"
+            to="/pricing"
             className="font-bold text-sm leading-[24px]"
             style={(isActive) => ({
               color: isActive ? "#252B42" : "#737373",
             })}
           >
-            Pages
+            Pricing
           </NavLink>
         </div>
       )}{" "}

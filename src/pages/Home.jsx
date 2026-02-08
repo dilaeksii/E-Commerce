@@ -161,7 +161,7 @@ export const Home = () => {
           </p>
         </div>
         <div className="flex justify-around py-30 max-sm:flex-col max-sm:gap-10">
-          {saleCards.map((card, index) => (
+          {saleCards.slice(0,2).map((card, index) => (
             <SaleBlog key={index} card={card} />
           ))}
         </div>
