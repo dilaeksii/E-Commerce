@@ -1,4 +1,5 @@
 import { ArrowBigLeft, ArrowRight, Mail, Menu, Phone } from "lucide-react";
+import Gravatar from "react-gravatar";
 import {
   FaCaretDown,
   FaFacebook,
@@ -22,11 +23,12 @@ export const Header = () => {
   const about = useRouteMatch("/about");
 
   const likes = useSelector((state) => state.likes.value);
-  
-  
+
+  const user = useSelector((state) => state.user.user);
+
   return (
     <div>
-      {!teams && !contact && !about &&(
+      {!teams && !contact && !about && (
         <div className="bg-[#252B42] px-[24px] py-[12px] flex justify-between max-sm:hidden">
           <div className="flex gap-[10px]">
             <div className="flex gap-[5px] h-[44px] w-[145px]">
@@ -64,7 +66,9 @@ export const Header = () => {
           </div>
         </div>
       )}
-      <div className={`py-[20px] px-[38px] flex justify-between ${contact ? "max-sm:bg-[#F6F6F6]" : ""}`}>
+      <div
+        className={`py-[20px] px-[38px] flex justify-between ${contact ? "max-sm:bg-[#F6F6F6]" : ""}`}
+      >
         <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
           Bandage
         </p>
@@ -160,17 +164,19 @@ export const Header = () => {
             Pricing
           </NavLink>
         </div>
-        {!teams && !contact && !about &&(
+        {!teams && !contact && !about && (
           <div className="flex items-center gap-[15px]">
-            <div className="flex items-center gap-[5px] max-sm:hidden">
-              <FaUser className="text-[#23A6F0]" />
-              <Link
-                to="/signup"
-                className="font-bold text-sm leading-[24px] text-[#23A6F0]"
-              >
-                Login/Register
-              </Link>
-            </div>
+            {!user.email && (
+              <div className="flex items-center gap-[5px] max-sm:hidden">
+                <FaUser className="text-[#23A6F0]" />
+                <Link
+                  to="/signup"
+                  className="font-bold text-sm leading-[24px] text-[#23A6F0]"
+                >
+                  Login/Register
+                </Link>
+              </div>
+            )}
             <div>
               <Link
                 to="/search"
@@ -209,9 +215,19 @@ export const Header = () => {
                 <Menu />
               </Link>
             </div>
+            {user.email && (
+              <div className="flex items-center gap-2">
+                <Gravatar
+                  email={user.email}
+                  size={40}
+                  default="identicon"
+                  className="rounded-full"
+                />
+              </div>
+            )}
           </div>
         )}
-        {(teams || contact || about ) && (
+        {(teams || contact || about) && !user.email && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -219,10 +235,23 @@ export const Header = () => {
             >
               Login
             </Link>
-            <Link to="/signup" className="bg-[#23A6F0] rounded-md text-[#FFFFFF] w-[214px] flex items-center justify-around py-1 px-[20px]">
+            <Link
+              to="/signup"
+              className="bg-[#23A6F0] rounded-md text-[#FFFFFF] w-[214px] flex items-center justify-around py-1 px-[20px]"
+            >
               Become a Member
               <ArrowRight className="text-[#FFFFFF]" />
             </Link>
+          </div>
+        )}
+        {(teams || contact || about) && user.email && (
+          <div className="flex items-center gap-2">
+            <Gravatar
+              email={user.email}
+              size={40}
+              default="identicon"
+              className="rounded-full"
+            />
           </div>
         )}
         {(teams || contact || about) && (
@@ -297,7 +326,9 @@ export const Header = () => {
       )}{" "}
       {/**Home Page Menus */}
       {(shop || product || teams || contact || about) && (
-        <div className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${(contact || about) ? "max-sm:bg-[#F6F6F6]" : ""}`}>
+        <div
+          className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${contact || about ? "max-sm:bg-[#F6F6F6]" : ""}`}
+        >
           <NavLink
             to="/home"
             className="font-bold text-sm leading-[24px]"

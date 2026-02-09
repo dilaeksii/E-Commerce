@@ -1,29 +1,56 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { login } from "../features/users/userSlice";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Gravatar from "react-gravatar";
 
 export const Login = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm({ mode: "onChange" });
 
-    const {
-        register,
-        formState: { errors },
-        handleSubmit
-      } = useForm({ mode: "onChange" });
+  const [rememberMe, setRememberMe] = useState(false);
+  const dispatch = useDispatch();
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    console.log(data);
+    dispatch(login({ email, password, rememberMe }));
+  };
 
-      const onSubmit = (data) => console.log(data);
+  const error = useSelector((state) => state.user.error);
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
 
-        
+  const history = useHistory();
+  const token = useSelector((state) => state.user.token);
+
+  useEffect(() => {
+    if (token) {
+      history.push("/");
+    }
+  }, [token, history]);
+
+  const emailValue = watch("email");
+
   return (
-    <section class="bg-gradient-to-br from-[#EAF6FF] to-[#23A6F0] ">
-      <div class="mx-auto flex min-h-screen w-full max-w-6xl overflow-hidden rounded-lg shadow">
-        <div class="w-1/2 bg-white p-10 max-sm:w-full max-sm:mx-3">
-          <div class="p-6 space-y-4 max-sm:px-0">
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 ">
+    <section className="bg-gradient-to-br from-[#EAF6FF] to-[#23A6F0] ">
+      <div className="mx-auto flex min-h-screen w-full max-w-6xl overflow-hidden rounded-lg shadow">
+        <div className="w-1/2 bg-white p-10 max-sm:w-full max-sm:mx-3">
+          <div className="p-6 space-y-4 max-sm:px-0">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 ">
               Sign in to your account
             </h1>
-            <form class="space-y-4" action="#" onSubmit={handleSubmit(onSubmit)}>
+            <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Your email
@@ -51,7 +78,7 @@ export const Login = () => {
               </div>
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Password
@@ -62,7 +89,7 @@ export const Login = () => {
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required=""
+                  {...register("password")}
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -73,11 +100,12 @@ export const Login = () => {
                       aria-describedby="remember"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-primary-600 focus:ring-primary-600"
-                      required=""
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
                     />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label for="remember" className="text-gray-500">
+                    <label htmlFor="remember" className="text-gray-500">
                       Remember me
                     </label>
                   </div>
@@ -91,9 +119,9 @@ export const Login = () => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                className="flex justify-center relative w-full bg-[#23A6F0] text-[#FFFFFF] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                Sign in
+                LogIn
               </button>
               <p className="text-sm font-light text-gray-500">
                 Don’t have an account yet?{" "}
@@ -105,11 +133,20 @@ export const Login = () => {
                 </Link>
               </p>
             </form>
+            {emailValue && (
+              <div className="flex items-center gap-2">
+                <Gravatar
+                  email={emailValue}
+                  size={40}
+                  default="identicon"
+                  className="rounded-full"
+                />
+                <span>{emailValue}</span>
+              </div>
+            )}
           </div>
         </div>
-        <div
-          className=" w-1/2 bg-[url(/images/login.png)] bg-cover bg-no-repeat bg-contain bg-center max-sm:hidden"
-        />
+        <div className=" w-1/2 bg-[url(/images/login.png)] bg-cover bg-no-repeat bg-contain bg-center max-sm:hidden" />
       </div>
     </section>
   );
