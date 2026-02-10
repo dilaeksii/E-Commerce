@@ -182,7 +182,7 @@ export const Header = () => {
         </div>
         {!teams && !contact && !about && (
           <div className="flex items-center gap-[15px]">
-            {(!user.email || !auth.email) && (
+            {((!user.email) || (!auth.email)) && (
               <div className="flex items-center gap-[5px] max-sm:hidden">
                 <FaUser className="text-[#23A6F0]" />
                 <Link
@@ -243,7 +243,7 @@ export const Header = () => {
             )}
           </div>
         )}
-        {(teams || contact || about) && (!user.email || !auth.email) && (
+        {((teams || contact || about) && (!user.email) || (!auth.email)) && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -260,7 +260,7 @@ export const Header = () => {
             </Link>
           </div>
         )}
-        {(teams || contact || about) && (user.email || auth.email) && (
+        {((teams || contact || about) && (!user.email) || (!auth.email)) && (
           <div className="flex items-center gap-2">
             <Gravatar
               email={user.email || auth.email}
