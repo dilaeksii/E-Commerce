@@ -1,16 +1,22 @@
 import { useLocation, Link, NavLink } from "react-router-dom";
 import { LinkedCards } from "../../public/components/LinkedCards";
-import { linkedCard } from "../data/LinkedCard";
 import { Clients } from "../../public/components/Clients";
 import { ProductCard } from "../../public/components/ProductCard";
 import { useMemo, useState } from "react";
 import { LayoutGrid, List } from "lucide-react";
 import { FaCaretDown } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export const Shop = () => {
   const { pathname } = useLocation();
-
   const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
+  
+
+  const mostRated = useSelector((state) => state.categories.items);
+  console.log(mostRated);
+  const sortedByRating = [...mostRated].sort((a, b) => b.rating - a.rating);
+  console.log(sortedByRating);
+
 
   const createPro = (count) =>
     Array.from({ length: count }, () => ({
@@ -23,8 +29,9 @@ export const Shop = () => {
 
   const itemsPerPage = 12;
 
-  const items = useMemo(() => createPro(34), []); //Ürünler bir kere üretilir
-
+  const items = useSelector((state) => state.products.products) 
+  console.log(items);
+  const total = useSelector((state) => state.products.total)
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const currentItems = items.slice(
@@ -63,9 +70,8 @@ export const Shop = () => {
             <Link to="/home">Home</Link>
 
             {path.map((p, i) => {
-             
-              const to = "/" + path.slice(0, i + 1).join("/"); 
-              const label = p.charAt(0).toUpperCase() + p.slice(1); 
+              const to = "/" + path.slice(0, i + 1).join("/");
+              const label = p.charAt(0).toUpperCase() + p.slice(1);
 
               return (
                 <span key={i}>
@@ -89,13 +95,13 @@ export const Shop = () => {
           </div>
         </div>
         <div className="flex justify-around px-[38px] pb-8 max-sm:flex-col max-sm:items-center max-sm:gap-5">
-          {linkedCard.map((card, index) => (
+          {sortedByRating.slice(0,5).map((card, index) => (
             <LinkedCards key={index} card={card} />
           ))}
         </div>
       </div>
       <div className="py-5 px-5 flex justify-between max-sm:flex-col max-sm:items-center max-sm:gap-5">
-        <p>Showing all {currentItems.length} products </p>
+        <p>Showing all {currentItems.length}/{total} products </p>
         <div className="flex gap-3 items-center">
           <p className="text-[#737373] font-bold text-sm">Views: </p>
           <button
@@ -152,10 +158,11 @@ export const Shop = () => {
       <div className="flex items-center justify-center py-5">
         <div
           className={`max-sm:grid max-sm:grid-cols-1 max-sm:gap-10 max-sm:px-5
-            ${isList
-              ? "lg:flex lg:flex-col lg:gap-5"
-              : "lg:py-15 lg:grid lg:grid-cols-4 lg:gap-4 lg:px-30"}`
-          }
+            ${
+              isList
+                ? "lg:flex lg:flex-col lg:gap-5"
+                : "lg:py-15 lg:grid lg:grid-cols-4 lg:gap-4 lg:px-30"
+            }`}
         >
           {currentItems.map((product, index) => (
             <ProductCard key={index} product={product} />

@@ -12,8 +12,27 @@ import { About } from "./pages/About";
 import { SignUp } from "./pages/SignUp";
 import { Login } from "./pages/Login";
 import { Blog } from "./pages/Blog";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { verifyToken } from "./features/users/authSlice";
+import { fetchCategories } from "./features/products/categoriesSlice";
+import { fetchProducts } from "./features/products/productSlice";
 
 function AppContent() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(verifyToken());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   return (
     <>
       <ToastContainer />
@@ -30,7 +49,7 @@ function AppContent() {
           </Route>
           <WebLayout>
             <Switch>
-              <Route path="/product/:imageId">
+              <Route path="/product/:id">
                 <ProductDetail />
               </Route>
               <Route path="/home">
@@ -45,6 +64,9 @@ function AppContent() {
               <Route path="/about">
                 <About />
               </Route>
+              <Route path="/shop/:gender/:categoryName/:categoryId">
+                <Shop />
+              </Route>
               <Route path="/shop">
                 <Shop />
               </Route>
@@ -58,9 +80,5 @@ function AppContent() {
 }
 
 export default function App() {
-  return (
-    
-      <AppContent />
-    
-  );
+  return <AppContent />;
 }

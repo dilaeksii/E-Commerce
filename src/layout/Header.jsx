@@ -24,8 +24,18 @@ export const Header = () => {
 
   const likes = useSelector((state) => state.likes.value);
 
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.auth.user);
 
+  const items = useSelector((state) => state.categories.items);
+  //console.log(items);
+
+  const women = items.filter((item) => item.gender === "k");
+  const men = items.filter((item) => item.gender === "e");
+  //console.log("Women", women);
+
+  const womenItems = women.map((items) => items.code.split(":")[1]);
+  //console.log("Women items", womenItems)
+  const menItems = men.map((items) => items.code.split(":")[1]);
   return (
     <div>
       {!teams && !contact && !about && (
@@ -91,31 +101,36 @@ export const Header = () => {
               <FaCaretDown className="shrink-0" />
             </button>
 
-            <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg z-50">
-              <Link
-                className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                to="/shop"
-              >
-                Clothes
-              </Link>
-              <Link
-                className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                to="/shop"
-              >
-                Shoes
-              </Link>
-              <Link
-                className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                to="/shop"
-              >
-                Accessories
-              </Link>
-              <Link
-                className="block px-4 py-2 text-sm text-[#737373] hover:bg-gray-100"
-                to="/shop"
-              >
-                Sport
-              </Link>
+            <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg z-50 flex py-5 px-10 justify-center gap-10">
+              <div>
+                <h4 className="font-bold text-[#252B42]">Kadın</h4>
+                {women.map((item) => {
+                  const gender = "Kadın";
+                  const categoryName = item.code.split(":")[1];
+                  return (<NavLink
+                    key={item.id}
+                    to={`/shop/${gender}/${categoryName}/${item.id}`}
+                    className="block text-[#737373] hover:text-black"
+                  >
+                    {item.title}
+                  </NavLink>)
+                })}
+              </div>
+
+              <div>
+                <h4 className="font-bold text-[#252B42]">Erkek</h4>
+                {men.map((item) => {
+                  const gender = "Erkek";
+                  const categoryName = item.code.split(":")[1];
+                  return (<NavLink
+                    key={item.id}
+                    to={`/shop/${gender}/${categoryName}/${item.id}`}
+                    className="block text-[#737373] hover:text-black"
+                  >
+                    {item.title}
+                  </NavLink>)
+                })}
+              </div>
             </div>
           </div>
           <NavLink

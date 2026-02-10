@@ -1,30 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const imgId = () => Math.floor(Math.random() * 7) + 1;
-
-const createProduct = () => ({
-  imageId: imgId(),
-  title: "Graphic Design",
-  department: "English Department",
-  price: "$16.48",
-  salePrice: "$6.48",
-});
+export const fetchProducts = createAsyncThunk(
+  "products",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        "https://workintech-fe-ecommerce.onrender.com/products",
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Ürünler alınamadı",
+      );
+    }
+  },
+);
 
 const initialState = {
-  products: Array.from({ length: 10 }, createProduct),
+  products: [],
+  total: null,
+  error: null,
 };
 
 const productSlice = createSlice({
-  name: "product",
+  name: "products",
   initialState,
   reducers: {
-    loadProducts: (state) => {
-      if (state.products.length < 25) {
-        state.products.push(...Array.from({ length: 5 }, createProduct));
-      } else {
-        return;
-      }
-    },
+    loadProducts: (state, action) => {
+
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.products = action.payload.products;
+      state.total = action.payload.total
+    });
   },
 });
 

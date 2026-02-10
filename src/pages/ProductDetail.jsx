@@ -7,10 +7,11 @@ import { ProductCard } from "../../public/components/ProductCard";
 import { Clients } from "../../public/components/Clients";
 
 export const ProductDetail = () => {
-  const { imageId } = useParams();
+  const { id } = useParams();
   const { pathname } = useLocation();
 
-  const images = productDetail[0][`${imageId}`];
+  const items = useState((state) => state.products.products);
+  console.log(items);
 
   const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
 
@@ -37,7 +38,7 @@ export const ProductDetail = () => {
       salePrice: "$6.48",
     }));
 
-    const items = useMemo(() => createPro(), []);
+  // const items = useMemo(() => createPro(), []);
 
   return (
     <div>
@@ -269,19 +270,21 @@ export const ProductDetail = () => {
       <div className="bg-[#FAFAFA]">
         <div className="py-8 px-[38px] flex flex-col items-center max-sm:px-4">
           <div className="border-b w-[1051px] border-[#737373] py-5 max-sm:flex max-sm:justify-center max-sm:w-[324px]">
-                <p className="text-[#252B42] font-bold text-2xl tracking-[0.1px] leading-[32px]">BESTSELLER PRODUCTS</p>
+            <p className="text-[#252B42] font-bold text-2xl tracking-[0.1px] leading-[32px]">
+              BESTSELLER PRODUCTS
+            </p>
           </div>
           <div className="grid grid-cols-4 grid-rows-2 gap-5 py-10 w-[1049px] max-sm:hidden">
-                {items.map((product,index) => (
-                  <ProductCard key={index} product={product} />
-                ))}
+            {items.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
           </div>
           <div className="hidden max-sm:grid max-sm:grid-cols-1 max-sm:grid-rows-4 max-sm:w-[400px] max-sm:px-5 max-sm:py-10 max-sm:gap-5">
-                {items.slice(0, 4).map((product,index) => (
-                  <ProductCard key={index} product={product} />
-                ))}
+            {items.slice(0, 4).map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
           </div>
-          <Clients className="py-5"/>
+          <Clients className="py-5" />
         </div>
       </div>
     </div>

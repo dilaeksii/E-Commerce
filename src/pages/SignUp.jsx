@@ -44,7 +44,7 @@ export const SignUp = () => {
         params: payload,
       })
       .then((response) => {
-        toast.success("Kayıt işlemi başarılı!");
+        toast.success("You need to click link in email to activate your account!");
         setTimeout(() => {
           history.push("/home");
         }, 2000);

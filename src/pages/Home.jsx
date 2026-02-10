@@ -7,12 +7,14 @@ import { ShopCards } from "../../public/components/ShopCards";
 import { homeCards } from "../data/HomeCard";
 import { saleCards } from "../data/SaleCard";
 import { loadProducts } from "../features/products/productSlice";
+import { useState } from "react";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
-  
-  
+  const products = useSelector((state) => state.products.products);
+  const [visible, setVisible] = useState(10);
+
+
   return (
     <>
       <div className="grid place-items-center my-10 max-sm:hidden">
@@ -96,13 +98,16 @@ export const Home = () => {
           </p>
         </div>
         <div className="py-15 grid grid-cols-5 gap-8 px-30 max-sm:grid-cols-1">
-          {products.map((product, index) => (
+          {products.slice(0, visible).map((product, index) => (
             <ProductCard key={index} product={product} />
           ))}
         </div>
         <div className="flex justify-center relative z-50">
           <button
-            onClick={() => dispatch(loadProducts())}
+            onClick={() => {
+              dispatch(loadProducts());
+              setVisible((prev) => prev + 5);
+            }}
             type="button"
             className="border border-[#23A6F0] text-[#23A6F0] rounded-sm py-[15px] px-[40px] text-sm font-bold leading-[22px] relative z-50"
           >
@@ -161,7 +166,7 @@ export const Home = () => {
           </p>
         </div>
         <div className="flex justify-around py-30 max-sm:flex-col max-sm:gap-10">
-          {saleCards.slice(0,2).map((card, index) => (
+          {saleCards.slice(0, 2).map((card, index) => (
             <SaleBlog key={index} card={card} />
           ))}
         </div>
