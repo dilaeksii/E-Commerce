@@ -234,7 +234,7 @@ export const Header = () => {
             {(user.email || auth.email) && (
               <div className="flex items-center gap-2">
                 <Gravatar
-                  email={user.email}
+                  email={user.email || auth.email}
                   size={40}
                   default="identicon"
                   className="rounded-full"
