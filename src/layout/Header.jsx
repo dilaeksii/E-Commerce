@@ -24,7 +24,8 @@ export const Header = () => {
 
   const likes = useSelector((state) => state.likes.value);
 
-  const user = useSelector((state) => state.auth.user);
+  const auth = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
 
   const items = useSelector((state) => state.categories.items);
   //console.log(items);
@@ -181,7 +182,7 @@ export const Header = () => {
         </div>
         {!teams && !contact && !about && (
           <div className="flex items-center gap-[15px]">
-            {!user.email && (
+            {(!user.email || !auth.email) && (
               <div className="flex items-center gap-[5px] max-sm:hidden">
                 <FaUser className="text-[#23A6F0]" />
                 <Link
@@ -230,7 +231,7 @@ export const Header = () => {
                 <Menu />
               </Link>
             </div>
-            {user.email && (
+            {(user.email || auth.email) && (
               <div className="flex items-center gap-2">
                 <Gravatar
                   email={user.email}
@@ -242,7 +243,7 @@ export const Header = () => {
             )}
           </div>
         )}
-        {(teams || contact || about) && !user.email && (
+        {(teams || contact || about) && (!user.email || !auth.email) && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -259,10 +260,10 @@ export const Header = () => {
             </Link>
           </div>
         )}
-        {(teams || contact || about) && user.email && (
+        {(teams || contact || about) && (user.email || auth.email) && (
           <div className="flex items-center gap-2">
             <Gravatar
-              email={user.email}
+              email={user.email || auth.email}
               size={40}
               default="identicon"
               className="rounded-full"
