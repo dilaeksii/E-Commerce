@@ -5,38 +5,41 @@ import { useParams, useLocation, Link, NavLink } from "react-router-dom";
 import { productDetail } from "../data/ProductDetail";
 import { ProductCard } from "../../public/components/ProductCard";
 import { Clients } from "../../public/components/Clients";
+import { useSelector } from "react-redux";
 
 export const ProductDetail = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
 
-  const items = useState((state) => state.products.products);
-  console.log(items);
+  const products = useSelector((state) => state.products.products);
+  //console.log("ürünler",products);
+  const image = products.map((img) => img.images[0].url);
+  //console.log(images)
 
   const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const plusSlides = (n) => {
-    let slide = currentSlide + n;
-    if (slide < 0) {
-      setCurrentSlide(images.length - 1);
-    } else if (slide > images.length - 1) {
-      setCurrentSlide(0);
-    } else {
-      setCurrentSlide(slide);
-    }
-    console.log(slide);
-  };
+  // const plusSlides = (n) => {
+  //   let slide = currentSlide + n;
+  //   if (slide < 0) {
+  //     setCurrentSlide(products.length - 1);
+  //   } else if (slide > products.length - 1) {
+  //     setCurrentSlide(0);
+  //   } else {
+  //     setCurrentSlide(slide);
+  //   }
+  //   console.log(slide);
+  // };
 
-  const createPro = () =>
-    Array.from({ length: 8 }, () => ({
-      imageId: Math.floor(Math.random() * 7) + 1,
-      title: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      salePrice: "$6.48",
-    }));
+  // const createPro = () =>
+  //   Array.from({ length: 8 }, () => ({
+  //     imageId: Math.floor(Math.random() * 7) + 1,
+  //     title: "Graphic Design",
+  //     department: "English Department",
+  //     price: "$16.48",
+  //     salePrice: "$6.48",
+  //   }));
 
   // const items = useMemo(() => createPro(), []);
 
@@ -76,7 +79,7 @@ export const ProductDetail = () => {
               {" "}
               {/*Slider container*/}
               <div className="">
-                <img src={images[currentSlide]} alt="" className="w-full" />
+                <img src={image[0]} alt="" className="w-full" />
               </div>
               <a
                 className="cursor-pointer absolute p-1 select-none font-bold text-[20px] bottom-[50%] hover:text-[#23A6F0] text-[#FFFFFF]"
@@ -91,20 +94,11 @@ export const ProductDetail = () => {
                 ❯
               </a>
             </div>
-            <div className="after:content-none after:table after:clear-both">
+             <div className="after:content-none after:table after:clear-both">
               <div className="flex w-[219px] h-[75px] gap-3 py-5">
-                {images.map((img, index) => (
-                  <div className="opacity-75">
-                    <img
-                      key={index}
-                      src={img}
-                      alt=""
-                      onClick={() => setCurrentSlide(index)}
-                    />
-                  </div>
-                ))}
+                
               </div>
-            </div>
+            </div> 
           </div>
           <div className="flex flex-col gap-5 py-5">
             <p className="text-xl leading-[30px] tracking-[0.2px] text-[#252B42]">
@@ -274,7 +268,7 @@ export const ProductDetail = () => {
               BESTSELLER PRODUCTS
             </p>
           </div>
-          <div className="grid grid-cols-4 grid-rows-2 gap-5 py-10 w-[1049px] max-sm:hidden">
+          {/* <div className="grid grid-cols-4 grid-rows-2 gap-5 py-10 w-[1049px] max-sm:hidden">
             {items.map((product, index) => (
               <ProductCard key={index} product={product} />
             ))}
@@ -283,7 +277,7 @@ export const ProductDetail = () => {
             {items.slice(0, 4).map((product, index) => (
               <ProductCard key={index} product={product} />
             ))}
-          </div>
+          </div> */}
           <Clients className="py-5" />
         </div>
       </div>

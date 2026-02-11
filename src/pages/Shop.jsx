@@ -2,36 +2,43 @@ import { useLocation, Link, NavLink } from "react-router-dom";
 import { LinkedCards } from "../../public/components/LinkedCards";
 import { Clients } from "../../public/components/Clients";
 import { ProductCard } from "../../public/components/ProductCard";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { LayoutGrid, List } from "lucide-react";
-import { FaCaretDown } from "react-icons/fa";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../features/products/productSlice";
 
 export const Shop = () => {
-  const { pathname } = useLocation();
-  const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
+  const dispatch = useDispatch();
   
 
+  const { pathname } = useLocation();
+  const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
+  const category = path.length === 4 ? path[path.length-1] : null;
+  //console.log( typeof category_id);
   const mostRated = useSelector((state) => state.categories.items);
-  console.log(mostRated);
+  // console.log(mostRated);
   const sortedByRating = [...mostRated].sort((a, b) => b.rating - a.rating);
-  console.log(sortedByRating);
+  // console.log(sortedByRating);
+  const [sort, setSort] = useState("");
+  const [filter, setFilter] = useState("");
+  useEffect(() => {
+    if (!category) {
+      dispatch(fetchProducts({sort, filter}));
+    } else {
+      dispatch(fetchProducts({ sort, category, filter }));
+    }
+  }, [category, dispatch]);
 
-
-  const createPro = (count) =>
-    Array.from({ length: count }, () => ({
-      imageId: Math.floor(Math.random() * 7) + 1,
-      title: "Graphic Design",
-      department: "English Department",
-      price: "$16.48",
-      salePrice: "$6.48",
-    }));
+  // useEffect(() => {
+  //   setSort("");
+  // }, [pathname]);
 
   const itemsPerPage = 12;
 
-  const items = useSelector((state) => state.products.products) 
+  const items = useSelector((state) => state.products.products);
   console.log(items);
-  const total = useSelector((state) => state.products.total)
+  const total = useSelector((state) => state.products.total);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const currentItems = items.slice(
@@ -42,22 +49,6 @@ export const Shop = () => {
   const goToPage = (p) => setCurrentPage(Math.max(1, Math.min(totalPages, p)));
 
   const [isList, setIsList] = useState(false);
-  const [selected, setSelected] = useState("");
-  const [filtered, setFiltered] = useState(currentItems);
-
-  const filterProducts = (filter) => {
-    console.log(filter);
-    if (filter === "popular") {
-      setFiltered(currentItems.filter((item) => item.imageId === 1));
-      return;
-    }
-  }; //filter fonksiyonu çalışıyor ama currentItems filteredItems bir çözüm bulunması lazım çünk filteredItems kullanınca ve sayfa değiştirince currentItems aynı kalıyor
-
-  const SORT_OPTIONS = {
-    popular: "Most Popular",
-    price_dec: "Price Z-A",
-    price_inc: "Price A-Z",
-  };
 
   return (
     <div>
@@ -95,13 +86,15 @@ export const Shop = () => {
           </div>
         </div>
         <div className="flex justify-around px-[38px] pb-8 max-sm:flex-col max-sm:items-center max-sm:gap-5">
-          {sortedByRating.slice(0,5).map((card, index) => (
+          {sortedByRating.slice(0, 5).map((card, index) => (
             <LinkedCards key={index} card={card} />
           ))}
         </div>
       </div>
       <div className="py-5 px-5 flex justify-between max-sm:flex-col max-sm:items-center max-sm:gap-5">
-        <p>Showing all {currentItems.length}/{total} products </p>
+        <p>
+          Showing all {currentItems.length}/{total} products{" "}
+        </p>
         <div className="flex gap-3 items-center">
           <p className="text-[#737373] font-bold text-sm">Views: </p>
           <button
@@ -117,58 +110,90 @@ export const Shop = () => {
             <List className="text-[#ECECEC]" />
           </button>
         </div>
-        <div className="flex items-center justify-between gap-5 max-sm:justify-around max-sm:gap-3">
-          <div className="relative group">
+        <form action="">
+          <div className="flex items-center justify-between gap-5 max-sm:justify-around max-sm:gap-3">
+            <label
+              htmlFor="search"
+              className="block mb-2.5 text-sm font-medium text-heading sr-only"
+            >
+              Search
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-body"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="search"
+                className="block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-md focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                placeholder="Search"
+                onChange={(e) => setFilter(e.target.value)}
+              />
+            </div>
+            <div className="relative group">
+              <select
+                value={sort}
+                onChange={(e) => {
+                  e.preventDefault;
+                  setSort(e.target.value);
+                }}
+                className="border py-2 px-5 rounded-md"
+              >
+                <option value="">Filter</option>
+                <option value="price:asc">Price A-Z</option>
+                <option value="price:desc">Price Z-A</option>
+                <option value="rating:asc">Rating Asc</option>
+                <option value="rating:desc">Rating Desc</option>
+              </select>
+            </div>
             <button
               type="button"
-              className="flex items-center gap-2 font-bold text-sm leading-[24px] text-[#737373] border rounded-md border-[#737373] py-3 px-2"
+              className="text-[#FFFFFF] font-bold text-sm leading-[24px] border bg-[#23A6F0] py-3 px-10 rounded-md"
+              onClick={() => {
+                dispatch(fetchProducts({ sort: sort, category: category, filter: filter }));
+              }}
             >
-              {selected ? SORT_OPTIONS[selected] : "Popularity"}
-              <FaCaretDown className="shrink-0" />
+              Filter
             </button>
-            <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg z-50 min-w-40">
-              <button
-                className="block px-3 py-2 whitespace-nowrap"
-                onClick={() => setSelected("popular")}
-              >
-                Most Popular
-              </button>
-              <button
-                className="block px-3 py-2 whitespace-nowrap"
-                onClick={() => setSelected("price_dec")}
-              >
-                Price Z-A
-              </button>
-              <button
-                className="block px-3 py-2 whitespace-nowrap"
-                onClick={() => setSelected("price_inc")}
-              >
-                Price A-Z
-              </button>
-            </div>
           </div>
-          <button
-            className="text-[#FFFFFF] font-bold text-sm leading-[24px] border bg-[#23A6F0] py-3 px-10 rounded-md"
-            onClick={() => filterProducts(selected)}
-          >
-            Filter
-          </button>
-        </div>
+        </form>
       </div>
-      <div className="flex items-center justify-center py-5">
-        <div
-          className={`max-sm:grid max-sm:grid-cols-1 max-sm:gap-10 max-sm:px-5
+
+      {currentItems.length > 0 ? (
+        <div className="flex items-center justify-center py-5">
+          <div
+            className={`max-sm:grid max-sm:grid-cols-1 max-sm:gap-10 max-sm:px-5
             ${
               isList
                 ? "lg:flex lg:flex-col lg:gap-5"
                 : "lg:py-15 lg:grid lg:grid-cols-4 lg:gap-4 lg:px-30"
             }`}
-        >
-          {currentItems.map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
+          >
+            {currentItems.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center items-center py-10">
+          Ürün bulunamamaktadır!
+        </div>
+      )}
 
       <div className="flex justify-center pb-10">
         <div className="flex overflow-hidden rounded-md border border-[#BDBDBD]">

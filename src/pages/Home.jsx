@@ -6,14 +6,17 @@ import { SaleBlog } from "../../public/components/SaleBlog";
 import { ShopCards } from "../../public/components/ShopCards";
 import { homeCards } from "../data/HomeCard";
 import { saleCards } from "../data/SaleCard";
-import { loadProducts } from "../features/products/productSlice";
-import { useState } from "react";
+import { fetchProducts, loadProducts } from "../features/products/productSlice";
+import { useEffect, useState } from "react";
 
 export const Home = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const [visible, setVisible] = useState(10);
 
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <>

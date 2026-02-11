@@ -16,7 +16,6 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { verifyToken } from "./features/users/authSlice";
 import { fetchCategories } from "./features/products/categoriesSlice";
-import { fetchProducts } from "./features/products/productSlice";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -27,10 +26,6 @@ function AppContent() {
 
   useEffect(() => {
     dispatch(fetchCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchProducts());
   }, [dispatch]);
 
   return (
@@ -44,9 +39,6 @@ function AppContent() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/blog">
-            <Blog />
-          </Route>
           <WebLayout>
             <Switch>
               <Route path="/product/:id">
@@ -57,6 +49,9 @@ function AppContent() {
               </Route>
               <Route path="/team">
                 <Team />
+              </Route>
+              <Route path="/blog">
+                <Blog />
               </Route>
               <Route path="/contact">
                 <Contact />

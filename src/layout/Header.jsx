@@ -26,6 +26,7 @@ export const Header = () => {
 
   const auth = useSelector((state) => state.auth.user);
   const user = useSelector((state) => state.user.user);
+  
 
   const items = useSelector((state) => state.categories.items);
   //console.log(items);
@@ -94,13 +95,13 @@ export const Header = () => {
             Home
           </NavLink>
           <div className="relative group">
-            <button
-              type="button"
+            <NavLink
+              to="/shop"
               className={`flex items-center gap-2 font-bold text-sm leading-[24px] ${shop ? "text-[#252B42]" : "text-[#737373]"}`}
             >
               Shop
               <FaCaretDown className="shrink-0" />
-            </button>
+            </NavLink>
 
             <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bg-white shadow-lg rounded-lg z-50 flex py-5 px-10 justify-center gap-10">
               <div>
@@ -182,7 +183,7 @@ export const Header = () => {
         </div>
         {!teams && !contact && !about && (
           <div className="flex items-center gap-[15px]">
-            {((!user.email) || (!auth.email)) && (
+            {((!auth.email && !user.email)) && (
               <div className="flex items-center gap-[5px] max-sm:hidden">
                 <FaUser className="text-[#23A6F0]" />
                 <Link
@@ -239,11 +240,12 @@ export const Header = () => {
                   default="identicon"
                   className="rounded-full"
                 />
+                <span>{user.name}</span>
               </div>
             )}
           </div>
         )}
-        {((teams || contact || about) && ((!user.email) || (!auth.email))) && (
+        {((teams || contact || about) && ((!user.email && !auth.email))) && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -268,6 +270,7 @@ export const Header = () => {
               default="identicon"
               className="rounded-full"
             />
+            <span>{user.name}</span>
           </div>
         )}
         {(teams || contact || about) && (
