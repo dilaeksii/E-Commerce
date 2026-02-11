@@ -13,35 +13,12 @@ export const ProductDetail = () => {
 
   const products = useSelector((state) => state.products.products);
   //console.log("ürünler",products);
-  const image = products.map((img) => img.images[0].url);
-  //console.log(images)
 
+  const product = products.find(p => String(p.id) === String(id));
+  //console.log(product);
+  const image = product.images[0].url;
+  //console.log(image)
   const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
-
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  // const plusSlides = (n) => {
-  //   let slide = currentSlide + n;
-  //   if (slide < 0) {
-  //     setCurrentSlide(products.length - 1);
-  //   } else if (slide > products.length - 1) {
-  //     setCurrentSlide(0);
-  //   } else {
-  //     setCurrentSlide(slide);
-  //   }
-  //   console.log(slide);
-  // };
-
-  // const createPro = () =>
-  //   Array.from({ length: 8 }, () => ({
-  //     imageId: Math.floor(Math.random() * 7) + 1,
-  //     title: "Graphic Design",
-  //     department: "English Department",
-  //     price: "$16.48",
-  //     salePrice: "$6.48",
-  //   }));
-
-  // const items = useMemo(() => createPro(), []);
 
   return (
     <div>
@@ -79,26 +56,12 @@ export const ProductDetail = () => {
               {" "}
               {/*Slider container*/}
               <div className="">
-                <img src={image[0]} alt="" className="w-full" />
+                <img src={image} alt="" className="w-full" />
               </div>
-              <a
-                className="cursor-pointer absolute p-1 select-none font-bold text-[20px] bottom-[50%] hover:text-[#23A6F0] text-[#FFFFFF]"
-                onClick={() => plusSlides(-1)}
-              >
-                ❮
-              </a>
-              <a
-                className="cursor-pointer absolute p-1 select-none font-bold text-[20px] right-0 bottom-[50%] hover:text-[#23A6F0] text-[#FFFFFF]"
-                onClick={() => plusSlides(1)}
-              >
-                ❯
-              </a>
             </div>
-             <div className="after:content-none after:table after:clear-both">
-              <div className="flex w-[219px] h-[75px] gap-3 py-5">
-                
-              </div>
-            </div> 
+            <div className="after:content-none after:table after:clear-both">
+              <div className="flex w-[219px] h-[75px] gap-3 py-5"></div>
+            </div>
           </div>
           <div className="flex flex-col gap-5 py-5">
             <p className="text-xl leading-[30px] tracking-[0.2px] text-[#252B42]">
