@@ -1,4 +1,4 @@
-import { ArrowBigLeft, ArrowRight, Mail, Menu, Phone } from "lucide-react";
+import { ArrowRight, Mail, Menu, Phone } from "lucide-react";
 import Gravatar from "react-gravatar";
 import {
   FaCaretDown,
@@ -11,8 +11,11 @@ import {
   FaUser,
   FaYoutube,
 } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import { CardItems } from "../../public/components/CardItems";
+import { useEffect } from "react";
+import { fetchProducts } from "../features/products/productSlice";
 
 export const Header = () => {
   const shop = useRouteMatch("/shop");
@@ -21,23 +24,19 @@ export const Header = () => {
   const teams = useRouteMatch("/team");
   const contact = useRouteMatch("/contact");
   const about = useRouteMatch("/about");
-
+  const dispatch = useDispatch();
   const likes = useSelector((state) => state.likes.value);
-
   const auth = useSelector((state) => state.auth.user);
   const user = useSelector((state) => state.user.user);
-  
-
   const items = useSelector((state) => state.categories.items);
-  //console.log(items);
-
   const women = items.filter((item) => item.gender === "k");
   const men = items.filter((item) => item.gender === "e");
-  //console.log("Women", women);
+  const cardItems = useSelector((state) => state.card.totalCard);
+  console.log(cardItems);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  const womenItems = women.map((items) => items.code.split(":")[1]);
-  //console.log("Women items", womenItems)
-  const menItems = men.map((items) => items.code.split(":")[1]);
   return (
     <div>
       {!teams && !contact && !about && (
@@ -109,13 +108,15 @@ export const Header = () => {
                 {women.map((item) => {
                   const gender = "Kadın";
                   const categoryName = item.code.split(":")[1];
-                  return (<NavLink
-                    key={item.id}
-                    to={`/shop/${gender}/${categoryName}/${item.id}`}
-                    className="block text-[#737373] hover:text-black"
-                  >
-                    {item.title}
-                  </NavLink>)
+                  return (
+                    <NavLink
+                      key={item.id}
+                      to={`/shop/${gender}/${categoryName}/${item.id}`}
+                      className="block text-[#737373] hover:text-black"
+                    >
+                      {item.title}
+                    </NavLink>
+                  );
                 })}
               </div>
 
@@ -124,13 +125,15 @@ export const Header = () => {
                 {men.map((item) => {
                   const gender = "Erkek";
                   const categoryName = item.code.split(":")[1];
-                  return (<NavLink
-                    key={item.id}
-                    to={`/shop/${gender}/${categoryName}/${item.id}`}
-                    className="block text-[#737373] hover:text-black"
-                  >
-                    {item.title}
-                  </NavLink>)
+                  return (
+                    <NavLink
+                      key={item.id}
+                      to={`/shop/${gender}/${categoryName}/${item.id}`}
+                      className="block text-[#737373] hover:text-black"
+                    >
+                      {item.title}
+                    </NavLink>
+                  );
                 })}
               </div>
             </div>
@@ -183,7 +186,7 @@ export const Header = () => {
         </div>
         {!teams && !contact && !about && (
           <div className="flex items-center gap-[15px]">
-            {((!auth.email && !user.email)) && (
+            {!auth.email && !user.email && (
               <div className="flex items-center gap-[5px] max-sm:hidden">
                 <FaUser className="text-[#23A6F0]" />
                 <Link
@@ -202,24 +205,42 @@ export const Header = () => {
                 <FaSearch />
               </Link>
             </div>
-            <div className="flex items-center gap-[5px]">
-              <Link
-                to="/bag"
-                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams ? "text-xl" : "hidden"}`}
-              >
-                <FaShoppingCart />
-              </Link>{" "}
-              <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
-                1
-              </span>
+            <div className="relative group">
+              <div className="flex items-center gap-[5px]">
+                <div
+                  className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams ? "text-xl" : "hidden"}`}
+                >
+                  <FaShoppingCart />
+                </div>{" "}
+                <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
+                  {cardItems}
+                </span>
+                <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full mt-2 bg-white shadow-xl rounded-lg z-50 flex flex-col py-5 px-6 gap-4 min-w-[260px] transition-all duration-200">
+                  <p>Sepetinizde {cardItems} ürün bulunmaktadır.</p>
+                  <CardItems />
+
+                  <div className="flex gap-4 mt-6">
+                    <NavLink
+                      to="/cart"
+                      className="w-40 text-center border border-gray-300 text-gray-700 font-medium py-2 px-6 rounded-lg hover:bg-gray-100 transition"
+                    >
+                      Sepete Git
+                    </NavLink>
+                    <NavLink
+                      to="/checkout"
+                      className="w-48 text-center bg-[#23A6F0] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#1e90d2] transition"
+                    >
+                      Siparişi Tamamla
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div className="flex items-center gap-[5px] max-sm:hidden">
-              <Link
-                to="/bag"
-                className="font-bold text-sm leading-[24px] text-[#23A6F0]"
-              >
+              <div className="font-bold text-sm leading-[24px] text-[#23A6F0]">
                 <FaHeart />
-              </Link>{" "}
+              </div>{" "}
               <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
                 {likes}
               </span>
@@ -245,7 +266,7 @@ export const Header = () => {
             )}
           </div>
         )}
-        {((teams || contact || about) && ((!user.email && !auth.email))) && (
+        {(teams || contact || about) && !user.email && !auth.email && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
               to="/login"
@@ -262,7 +283,7 @@ export const Header = () => {
             </Link>
           </div>
         )}
-        {(teams || contact || about) &&  (
+        {(teams || contact || about) && (
           <div className="flex items-center gap-2">
             <Gravatar
               email={user.email || auth.email}
@@ -284,12 +305,11 @@ export const Header = () => {
               </Link>
             </div>
             <div className="flex items-center gap-[5px]">
-              <Link
-                to="/bag"
+              <div
                 className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact || about ? "text-xl" : "hidden"}`}
               >
                 <FaShoppingCart />
-              </Link>
+              </div>
             </div>
 
             <div className=" hidden flex items-center gap-[5px] max-sm:flex">
@@ -427,23 +447,19 @@ export const Header = () => {
             </Link>
           </div>
           <div className="flex items-center gap-[5px]">
-            <Link
-              to="/bag"
+            <div
               className="font-bold text-sm leading-[24px] text-[#23A6F0]"
             >
               <FaShoppingCart />
-            </Link>{" "}
+            </div>{" "}
             <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
               1
             </span>
           </div>
           <div className="flex items-center gap-[5px]">
-            <Link
-              to="/bag"
-              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
-            >
+            <div className="font-bold text-sm leading-[24px] text-[#23A6F0]">
               <FaHeart />
-            </Link>{" "}
+            </div>{" "}
             <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">
               1
             </span>

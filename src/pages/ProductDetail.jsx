@@ -1,24 +1,30 @@
 import { Eye, Heart, ShoppingCart } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams, useLocation, Link, NavLink } from "react-router-dom";
 import { productDetail } from "../data/ProductDetail";
 import { ProductCard } from "../../public/components/ProductCard";
 import { Clients } from "../../public/components/Clients";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleLike } from "../features/likes/likeSlice.js";
+import { toggleCard } from "../features/card/cardSlice.js";
+import { fetchProducts } from "../features/products/productSlice.js";
 
 export const ProductDetail = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
-
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
-  //console.log("ürünler",products);
-
-  const product = products.find(p => String(p.id) === String(id));
-  //console.log(product);
-  const image = product.images[0].url;
-  //console.log(image)
-  const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
+  const likedItems = useSelector((state) => state.likes.likedItems);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+  const product = products.find((p) => String(p.id) === String(id));
+  if (!product) return <div>Loading...</div>;
+  const image = product.images?.[0]?.url;
+  console.log(image);
+  const path = pathname.split("/").filter(Boolean);
+  const isLiked = likedItems[id] || false;
 
   return (
     <div>
@@ -108,10 +114,20 @@ export const ProductDetail = () => {
               </button>
               <div className="flex gap-3">
                 <button className="bg-[#E8E8E8] border-[#E8E8E8] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
-                  <Heart className="w-[17] h-[16]" />
+                  <Heart
+                    className={`w-[17] h-[16] ${isLiked ? "text-red-500" : ""} `}
+                    onClick={() => {
+                      dispatch(toggleLike(id));
+                    }}
+                  />
                 </button>
                 <button className="bg-[#E8E8E8] border-[#E8E8E8] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
-                  <ShoppingCart className="w-[17] h-[16]" />
+                  <ShoppingCart
+                    className="w-[17] h-[16]"
+                    onClick={() => {
+                      dispatch(toggleCard({ id: product.id, price: product.price, img: image }));
+                    }}
+                  />
                 </button>
                 <button className="bg-[#E8E8E8] border-[#E8E8E8] rounded-full w-[40px] h-[40px] text-[#252B42] flex items-center justify-center">
                   <Eye className="w-[17] h-[16]" />

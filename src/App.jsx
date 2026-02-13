@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { verifyToken } from "./features/users/authSlice";
 import { fetchCategories } from "./features/products/categoriesSlice";
+import { Card } from "./pages/Card";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -46,6 +47,9 @@ function AppContent() {
               </Route>
               <Route path="/home">
                 <Home />
+              </Route>
+              <Route path="/cart">
+                <Card />
               </Route>
               <Route path="/team">
                 <Team />

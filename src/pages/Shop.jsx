@@ -10,16 +10,11 @@ import { fetchProducts } from "../features/products/productSlice";
 
 export const Shop = () => {
   const dispatch = useDispatch();
-  
-
   const { pathname } = useLocation();
-  const path = pathname.split("/").filter(Boolean); // ["", "shop"] => filter => ["shop"] (array)
+  const path = pathname.split("/").filter(Boolean); 
   const category = path.length === 4 ? path[path.length-1] : null;
-  //console.log( typeof category_id);
   const mostRated = useSelector((state) => state.categories.items);
-  // console.log(mostRated);
   const sortedByRating = [...mostRated].sort((a, b) => b.rating - a.rating);
-  // console.log(sortedByRating);
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("");
   useEffect(() => {
@@ -29,15 +24,8 @@ export const Shop = () => {
       dispatch(fetchProducts({ sort, category, filter }));
     }
   }, [category, dispatch]);
-
-  // useEffect(() => {
-  //   setSort("");
-  // }, [pathname]);
-
   const itemsPerPage = 12;
-
   const items = useSelector((state) => state.products.products);
-  console.log(items);
   const total = useSelector((state) => state.products.total);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(items.length / itemsPerPage);
@@ -45,9 +33,7 @@ export const Shop = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
-
   const goToPage = (p) => setCurrentPage(Math.max(1, Math.min(totalPages, p)));
-
   const [isList, setIsList] = useState(false);
 
   return (

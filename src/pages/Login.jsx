@@ -14,7 +14,6 @@ export const Login = () => {
     handleSubmit,
     watch,
   } = useForm({ mode: "onChange" });
-
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
   const onSubmit = (data) => {
@@ -22,21 +21,17 @@ export const Login = () => {
     console.log(data);
     dispatch(login({ email, password, rememberMe }));
   };
-
   const error = useSelector((state) => state.user.error);
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
-
   const history = useHistory();
   const token = useSelector((state) => state.user.token);
-
   useEffect(() => {
     if (token) {
       history.push("/");
     }
   }, [token, history]);
-
   const emailValue = watch("email");
 
   return (

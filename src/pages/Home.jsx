@@ -10,13 +10,11 @@ import { fetchProducts, loadProducts } from "../features/products/productSlice";
 import { useEffect, useState } from "react";
 
 export const Home = () => {
+  console.log("HOME RENDER");
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const [visible, setVisible] = useState(10);
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  
 
   return (
     <>
@@ -169,8 +167,8 @@ export const Home = () => {
           </p>
         </div>
         <div className="flex justify-around py-30 max-sm:flex-col max-sm:gap-10">
-          {saleCards.slice(0, 2).map((card, index) => (
-            <SaleBlog key={index} card={card} />
+          {saleCards.slice(0, 2).map((card) => (
+            <SaleBlog key={card.id} card={card} />
           ))}
         </div>
       </section>

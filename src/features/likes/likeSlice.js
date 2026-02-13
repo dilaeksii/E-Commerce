@@ -3,13 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const likesSlice = createSlice({
   name: "likes",
   initialState: {
-    liked: false,
+    likedItems: {},
     value: 0,
   },
   reducers: {
-    toggleLike: (state) => {
-      state.liked = !state.liked;
-      state.value += state.liked ? 1 : -1;
+    toggleLike: (state, action) => {
+      const id = action.payload;
+      state.likedItems[id] = !state.likedItems[id];
+      state.value += state.likedItems[id] ? 1 : -1;
     },
   },
 });
