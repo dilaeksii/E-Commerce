@@ -17,6 +17,8 @@ import { useDispatch } from "react-redux";
 import { verifyToken } from "./features/users/authSlice";
 import { fetchCategories } from "./features/products/categoriesSlice";
 import { Card } from "./pages/Card";
+import ProtectedRoute from "./layouts/ProtectedRoute";
+import { Checkout } from "./pages/Checkout";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -54,6 +56,11 @@ function AppContent() {
               <Route path="/team">
                 <Team />
               </Route>
+
+              <ProtectedRoute path="/checkout">
+                <Checkout />
+              </ProtectedRoute>
+
               <Route path="/blog">
                 <Blog />
               </Route>

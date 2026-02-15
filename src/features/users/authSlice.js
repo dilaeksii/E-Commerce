@@ -9,14 +9,11 @@ export const verifyToken = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) return thunkAPI.rejectWithValue("Token yok");
 
-      if (token) {
-        const response = await axios.get(
-          "https://workintech-fe-ecommerce.onrender.com/verify",
-          { headers: { Authorization: token } },
-        );
-        axios.defaults.headers.common["Authorization"] = token;
-        return response.data;
-      }
+      const response = await axios.get(
+        "https://workintech-fe-ecommerce.onrender.com/verify"
+      );
+
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Verify başarısız",

@@ -5,6 +5,8 @@ import userReducer  from "../features/users/userSlice.js";
 import authReducer  from "../features/users/authSlice.js";
 import categoriesReducer  from "../features/products/categoriesSlice.js"
 import cardReducer from "../features/card/cardSlice.js"
+import addressReducer from "../features/users/addressslice.js"
+import paymentReducer from "../features/users/paymentSlice.js"
 
 export default configureStore({
   reducer: {
@@ -13,6 +15,8 @@ export default configureStore({
     user: userReducer,
     auth: authReducer,
     categories: categoriesReducer,
-    card: cardReducer
+    card: cardReducer,
+    address: addressReducer,
+    payment: paymentReducer
   }
 });
