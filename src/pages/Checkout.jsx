@@ -9,7 +9,7 @@ import {
   addressDelete,
   selectAddress,
   addressUpdate,
-} from "../features/users/addressslice";
+} from "../features/users/addressSlice";
 
 import {
   cardInfo,
