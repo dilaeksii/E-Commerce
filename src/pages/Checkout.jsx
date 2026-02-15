@@ -16,7 +16,7 @@ import {
   selectCard,
   cardAdd,
   cardUpdate,
-  cardDelete, 
+  cardDelete,
 } from "../features/users/paymentSlice.js";
 
 export const Checkout = () => {
@@ -32,23 +32,20 @@ export const Checkout = () => {
     0
   );
 
-  const shipping = productTotal >= 150 ? 0 : (cartItems.length ? 29.99 : 0); 
-  const shippingDiscount = productTotal >= 150 ? -29.99 : 0; 
-  const grandTotal = productTotal + shipping; 
+  const shipping = productTotal >= 150 ? 0 : cartItems.length ? 29.99 : 0;
+  const shippingDiscount = productTotal >= 150 ? -29.99 : 0;
+  const grandTotal = productTotal + shipping;
 
   const [step, setStep] = useState(1);
 
-  const [mode, setMode] = useState("add"); 
+  const [mode, setMode] = useState("add");
   const [editingId, setEditingId] = useState(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
 
-
   const [sameInvoice, setSameInvoice] = useState(true);
-
 
   const [agreementsOk, setAgreementsOk] = useState(false);
 
- 
   const [isCardFormOpen, setIsCardFormOpen] = useState(false);
   const [cardMode, setCardMode] = useState("add");
   const [editingCardId, setEditingCardId] = useState(null);
@@ -143,7 +140,6 @@ export const Checkout = () => {
     dispatch(addressInfo());
   };
 
-
   const openEditCard = (card) => {
     setIsCardFormOpen(true);
     setCardMode("edit");
@@ -155,12 +151,11 @@ export const Checkout = () => {
         ? String(card.expire_month).padStart(2, "0")
         : "",
       expire_year: card.expire_year ? String(card.expire_year) : "",
-      cvv: "", 
+      cvv: "",
       name_on_card: card.name_on_card || "",
     });
   };
 
-  
   const submitCard = async (e) => {
     e.preventDefault();
 
@@ -174,7 +169,7 @@ export const Checkout = () => {
     if (cardMode === "edit") {
       await dispatch(cardUpdate({ id: editingCardId, ...payload }));
     } else {
-      await dispatch(cardAdd(payload)); 
+      await dispatch(cardAdd(payload));
     }
 
     setIsCardFormOpen(false);
@@ -193,7 +188,7 @@ export const Checkout = () => {
   };
 
   const removeCard = async (cardId) => {
-    await dispatch(cardDelete(cardId)); 
+    await dispatch(cardDelete(cardId));
     dispatch(cardInfo());
   };
 
@@ -209,16 +204,16 @@ export const Checkout = () => {
 
   return (
     <div className="w-full bg-gray-50">
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid grid-cols-3 gap-6">
-       
-          <div className="lg:col-span-2 space-y-6">
-           
-            <div className="rounded-2xl bg-white border shadow-sm p-2 flex gap-2">
+      <div className="mx-auto max-w-6xl px-4 py-10 max-sm:px-3 max-sm:py-6">
+        <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 max-sm:gap-4">
+          {/* LEFT */}
+          <div className="lg:col-span-2 space-y-6 max-sm:space-y-4">
+            {/* TAB BAR */}
+            <div className="rounded-2xl bg-white border shadow-sm p-2 flex gap-2 max-sm:flex-col">
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className={`flex-1 rounded-2xl py-3 font-extrabold transition ${
+                className={`flex-1 rounded-2xl py-3 font-extrabold transition max-sm:py-2 max-sm:text-sm ${
                   step === 1 ? "text-white" : "text-gray-600 hover:bg-gray-50"
                 }`}
                 style={{ backgroundColor: step === 1 ? BLUE : "transparent" }}
@@ -236,7 +231,7 @@ export const Checkout = () => {
                   }
                   setStep(2);
                 }}
-                className={`flex-1 rounded-2xl py-3 font-extrabold transition ${
+                className={`flex-1 rounded-2xl py-3 font-extrabold transition max-sm:py-2 max-sm:text-sm ${
                   step === 2 ? "text-white" : "text-gray-600 hover:bg-gray-50"
                 }`}
                 style={{ backgroundColor: step === 2 ? BLUE : "transparent" }}
@@ -245,7 +240,7 @@ export const Checkout = () => {
               </button>
             </div>
 
-       
+            {/* STEP 1 */}
             {step === 1 && (
               <>
                 <div
@@ -254,17 +249,19 @@ export const Checkout = () => {
                   }`}
                   style={{ ringColor: step === 1 ? `${BLUE}55` : undefined }}
                 >
-                  <div className="flex items-center justify-between px-6 py-5 border-b">
-                    <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-between px-6 py-5 border-b max-sm:flex-col max-sm:items-start max-sm:gap-3 max-sm:px-4 max-sm:py-4">
+                    <div className="flex items-start gap-4 max-sm:gap-3">
                       <div
-                        className="h-10 w-10 rounded-full flex items-center justify-center text-white font-extrabold"
+                        className="h-10 w-10 rounded-full flex items-center justify-center text-white font-extrabold max-sm:h-9 max-sm:w-9"
                         style={{ backgroundColor: BLUE }}
                       >
                         1
                       </div>
 
                       <div>
-                        <div className="text-xl font-bold">Adres Bilgileri</div>
+                        <div className="text-xl font-bold max-sm:text-lg">
+                          Adres Bilgileri
+                        </div>
                         <div className="text-sm text-gray-500">
                           Teslimat adresini seç veya yeni adres ekle
                         </div>
@@ -325,7 +322,7 @@ export const Checkout = () => {
                           address: "",
                         });
                       }}
-                      className="inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-bold hover:bg-gray-50"
+                      className="inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-bold hover:bg-gray-50 max-sm:w-full max-sm:justify-center"
                       style={{ borderColor: BLUE, color: BLUE }}
                     >
                       <FaPlus />
@@ -333,14 +330,14 @@ export const Checkout = () => {
                     </button>
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-6 max-sm:p-4">
                     {!addresses?.length ? (
-                      <div className="text-gray-500 text-lg">
+                      <div className="text-gray-500 text-lg max-sm:text-base">
                         Kayıtlı adres bulunamadı. “Yeni Adres Ekle” ile
                         ekleyebilirsin.
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-sm:grid-cols-1">
                         <button
                           type="button"
                           onClick={() => {
@@ -348,7 +345,7 @@ export const Checkout = () => {
                             setMode("add");
                             setEditingId(null);
                           }}
-                          className="h-[160px] rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 hover:bg-gray-50"
+                          className="h-[160px] rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 hover:bg-gray-50 max-sm:h-[140px]"
                           style={{ borderColor: `${BLUE}66` }}
                         >
                           <div
@@ -438,26 +435,26 @@ export const Checkout = () => {
                   </div>
                 </div>
 
-               
+                {/* Address Form */}
                 {isAddOpen && (
                   <form
                     onSubmit={onSubmitAddress}
-                    className="rounded-2xl bg-white border shadow-sm p-6"
+                    className="rounded-2xl bg-white border shadow-sm p-6 max-sm:p-4"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-xl font-bold">
+                    <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+                      <div className="text-xl font-bold max-sm:text-lg">
                         {mode === "edit" ? "Adresi Düzenle" : "Yeni Adres"}
                       </div>
                       <button
                         type="button"
-                        className="text-sm text-gray-500 hover:text-gray-800"
+                        className="text-sm text-gray-500 hover:text-gray-800 max-sm:underline"
                         onClick={() => setIsAddOpen(false)}
                       >
                         Kapat
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-sm:grid-cols-1">
                       <Input
                         label="Başlık"
                         name="title"
@@ -510,10 +507,10 @@ export const Checkout = () => {
                       </div>
                     </div>
 
-                    <div className="mt-5 flex justify-end">
+                    <div className="mt-5 flex justify-end max-sm:justify-stretch">
                       <button
                         type="submit"
-                        className="rounded-xl px-6 py-3 text-white font-bold shadow-sm hover:opacity-90"
+                        className="rounded-xl px-6 py-3 text-white font-bold shadow-sm hover:opacity-90 max-sm:w-full"
                         style={{ backgroundColor: BLUE }}
                       >
                         {mode === "edit" ? "Güncelle" : "Kaydet"}
@@ -524,22 +521,24 @@ export const Checkout = () => {
               </>
             )}
 
-          
+            {/* STEP 2 */}
             {step === 2 && (
               <div
                 className="rounded-2xl bg-white border shadow-sm overflow-hidden ring-2"
                 style={{ ringColor: `${BLUE}55` }}
               >
-                <div className="flex items-center justify-between px-6 py-5 border-b">
-                  <div className="flex items-center gap-4">
+                <div className="flex items-center justify-between px-6 py-5 border-b max-sm:flex-col max-sm:items-start max-sm:gap-2 max-sm:px-4 max-sm:py-4">
+                  <div className="flex items-center gap-4 max-sm:gap-3">
                     <div
-                      className="h-10 w-10 rounded-full flex items-center justify-center text-white font-extrabold"
+                      className="h-10 w-10 rounded-full flex items-center justify-center text-white font-extrabold max-sm:h-9 max-sm:w-9"
                       style={{ backgroundColor: BLUE }}
                     >
                       2
                     </div>
                     <div>
-                      <div className="text-xl font-bold">Kart ile Öde</div>
+                      <div className="text-xl font-bold max-sm:text-lg">
+                        Kart ile Öde
+                      </div>
                       <div className="text-sm text-gray-500">
                         Kart ile ödemeyi seçiniz. Banka/Kredi Kartı kullanarak
                         ödemenizi güvenle yapabilirsiniz.
@@ -550,18 +549,20 @@ export const Checkout = () => {
                   <button
                     type="button"
                     onClick={goBack}
-                    className="text-sm font-bold underline text-gray-500 hover:text-gray-800"
+                    className="text-sm font-bold underline text-gray-500 hover:text-gray-800 max-sm:self-end"
                   >
                     Adrese geri dön
                   </button>
                 </div>
 
-                <div className="p-6">
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                   
+                <div className="p-6 max-sm:p-4">
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 max-sm:grid-cols-1 max-sm:gap-4">
+                    {/* LEFT */}
                     <div className="lg:col-span-2">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="text-lg font-extrabold">Kart Bilgileri</div>
+                      <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+                        <div className="text-lg font-extrabold">
+                          Kart Bilgileri
+                        </div>
 
                         <button
                           type="button"
@@ -577,7 +578,7 @@ export const Checkout = () => {
                               name_on_card: "",
                             });
                           }}
-                          className="text-sm font-extrabold underline"
+                          className="text-sm font-extrabold underline max-sm:text-sm"
                           style={{ color: BLUE }}
                         >
                           {isCardFormOpen
@@ -587,13 +588,13 @@ export const Checkout = () => {
                       </div>
 
                       {!isCardFormOpen && (
-                        <div className="rounded-2xl border p-4">
+                        <div className="rounded-2xl border p-4 max-sm:p-3">
                           {!cards?.length ? (
                             <div className="text-gray-500">
                               Kayıtlı kart bulunamadı.
                             </div>
                           ) : (
-                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-sm:grid-cols-1">
                               {cards.map((c) => (
                                 <label
                                   key={c.id}
@@ -610,7 +611,6 @@ export const Checkout = () => {
                                         : undefined,
                                   }}
                                 >
-                      
                                   <div className="absolute right-4 top-4 flex items-center gap-3">
                                     <button
                                       type="button"
@@ -674,8 +674,11 @@ export const Checkout = () => {
                       )}
 
                       {isCardFormOpen && (
-                        <form onSubmit={submitCard} className="rounded-2xl border p-5">
-                          <div className="flex items-center justify-between mb-4">
+                        <form
+                          onSubmit={submitCard}
+                          className="rounded-2xl border p-5 max-sm:p-4"
+                        >
+                          <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
                             <div className="text-lg font-extrabold">
                               {cardMode === "edit"
                                 ? "Kartı Düzenle"
@@ -683,7 +686,7 @@ export const Checkout = () => {
                             </div>
                             <button
                               type="button"
-                              className="text-sm text-gray-500 hover:text-gray-800"
+                              className="text-sm text-gray-500 hover:text-gray-800 max-sm:underline"
                               onClick={() => {
                                 setIsCardFormOpen(false);
                                 setCardMode("add");
@@ -701,7 +704,7 @@ export const Checkout = () => {
                             </button>
                           </div>
 
-                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-sm:grid-cols-1">
                             <Input
                               label="Kart Numarası"
                               name="card_no"
@@ -756,7 +759,10 @@ export const Checkout = () => {
                                 name="cvv"
                                 value={cardForm.cvv}
                                 onChange={(e) =>
-                                  setCardForm((p) => ({ ...p, cvv: e.target.value }))
+                                  setCardForm((p) => ({
+                                    ...p,
+                                    cvv: e.target.value,
+                                  }))
                                 }
                               />
                             </div>
@@ -771,10 +777,10 @@ export const Checkout = () => {
                             3D Secure ile ödeme yapmak istiyorum.
                           </label>
 
-                          <div className="mt-5 flex justify-end">
+                          <div className="mt-5 flex justify-end max-sm:justify-stretch">
                             <button
                               type="submit"
-                              className="rounded-xl px-6 py-3 text-white font-extrabold hover:opacity-90"
+                              className="rounded-xl px-6 py-3 text-white font-extrabold hover:opacity-90 max-sm:w-full"
                               style={{ backgroundColor: BLUE }}
                             >
                               {cardMode === "edit" ? "Güncelle" : "Kaydet"}
@@ -783,23 +789,37 @@ export const Checkout = () => {
                         </form>
                       )}
                     </div>
+
+                    {/* RIGHT */}
                     <div className="lg:col-span-1">
-                      <div className="rounded-2xl border p-5">
-                        <div className="text-lg font-extrabold">Taksit Seçenekleri</div>
+                      <div className="rounded-2xl border p-5 max-sm:p-4">
+                        <div className="text-lg font-extrabold">
+                          Taksit Seçenekleri
+                        </div>
                         <div className="text-sm text-gray-500 mt-1">
                           Kartınıza uygun taksit seçeneğini seçiniz
                         </div>
 
                         <div className="mt-4 rounded-xl border overflow-hidden">
                           <div className="grid grid-cols-2 bg-gray-50 border-b">
-                            <div className="p-3 text-sm font-extrabold">Taksit</div>
-                            <div className="p-3 text-sm font-extrabold">Aylık</div>
+                            <div className="p-3 text-sm font-extrabold">
+                              Taksit
+                            </div>
+                            <div className="p-3 text-sm font-extrabold">
+                              Aylık
+                            </div>
                           </div>
 
                           <label className="grid grid-cols-2 items-center p-3 cursor-pointer">
                             <div className="flex items-center gap-2">
-                              <input type="radio" name="installment" defaultChecked />
-                              <span className="text-sm font-bold">Tek Çekim</span>
+                              <input
+                                type="radio"
+                                name="installment"
+                                defaultChecked
+                              />
+                              <span className="text-sm font-bold">
+                                Tek Çekim
+                              </span>
                             </div>
                             <div
                               className="text-sm font-extrabold text-right"
@@ -816,30 +836,41 @@ export const Checkout = () => {
                   {selectedCard && !isCardFormOpen && (
                     <div className="mt-5 text-sm text-gray-600">
                       Seçili kart:{" "}
-                      <span className="font-bold">{selectedCard.title || "Kart"}</span>
+                      <span className="font-bold">
+                        {selectedCard.title || "Kart"}
+                      </span>
                     </div>
                   )}
                 </div>
               </div>
             )}
           </div>
-          <div className="space-y-5">
-            <div className="rounded-2xl bg-white border shadow-sm p-6">
-              <div className="text-2xl font-extrabold mb-5">Sipariş Özeti</div>
 
-              <Row label="Ürünün Toplamı" value={productTotal.toFixed(2)} /> 
+          {/* RIGHT SIDEBAR */}
+          <div className="space-y-5 max-sm:space-y-4">
+            <div className="rounded-2xl bg-white border shadow-sm p-6 max-sm:p-4">
+              <div className="text-2xl font-extrabold mb-5 max-sm:text-xl max-sm:mb-4">
+                Sipariş Özeti
+              </div>
+
+              <Row label="Ürünün Toplamı" value={productTotal.toFixed(2)} />
               <Row label="Kargo Toplam" value={shipping.toFixed(2)} />
-              <Row label="Kargo İndirimi" value={shippingDiscount !== 0 ? `${shippingDiscount.toFixed(2)}` : "-"} />
+              <Row
+                label="Kargo İndirimi"
+                value={
+                  shippingDiscount !== 0 ? `${shippingDiscount.toFixed(2)}` : "-"
+                }
+              />
 
               <div className="my-4 border-t" />
 
-              <div className="flex items-center justify-between text-lg font-extrabold">
+              <div className="flex items-center justify-between text-lg font-extrabold max-sm:text-base">
                 <div>Toplam</div>
                 <div style={{ color: BLUE }}>${grandTotal.toFixed(2)}</div>
               </div>
             </div>
 
-            <label className="rounded-2xl bg-white border shadow-sm p-4 flex gap-3 items-start">
+            <label className="rounded-2xl bg-white border shadow-sm p-4 flex gap-3 items-start max-sm:p-3">
               <input
                 type="checkbox"
                 checked={agreementsOk}
@@ -847,8 +878,8 @@ export const Checkout = () => {
                 className="mt-1"
               />
               <span className="text-sm text-gray-700">
-                Ön bilgilendirme koşullarını ve mesafeli satış sözleşmesini okudum,
-                onaylıyorum.
+                Ön bilgilendirme koşullarını ve mesafeli satış sözleşmesini
+                okudum, onaylıyorum.
               </span>
             </label>
 
@@ -859,7 +890,7 @@ export const Checkout = () => {
                 alert("Ödeme adımı (UI) - burada sipariş tamamlanacak");
               }}
               disabled={!agreementsOk}
-              className={`w-full rounded-2xl py-4 text-white font-extrabold shadow-md transition ${
+              className={`w-full rounded-2xl py-4 text-white font-extrabold shadow-md transition max-sm:py-3 ${
                 agreementsOk ? "hover:opacity-90" : "opacity-50 cursor-not-allowed"
               }`}
               style={{ backgroundColor: BLUE }}
@@ -875,7 +906,7 @@ export const Checkout = () => {
 
 function Row({ label, value }) {
   return (
-    <div className="flex items-center justify-between text-sm text-gray-700 py-2">
+    <div className="flex items-center justify-between text-sm text-gray-700 py-2 max-sm:text-sm">
       <div>{label}</div>
       <div className="font-bold">{value}</div>
     </div>
@@ -885,10 +916,12 @@ function Row({ label, value }) {
 function Input({ label, ...props }) {
   return (
     <label className="block">
-      <div className="text-sm font-extrabold text-gray-700 mb-1">{label}</div>
+      <div className="text-sm font-extrabold text-gray-700 mb-1">
+        {label}
+      </div>
       <input
         {...props}
-        className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-200"
+        className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-200 max-sm:px-3 max-sm:py-2"
       />
     </label>
   );
@@ -897,7 +930,9 @@ function Input({ label, ...props }) {
 function Textarea({ label, ...props }) {
   return (
     <label className="block">
-      <div className="text-sm font-extrabold text-gray-700 mb-1">{label}</div>
+      <div className="text-sm font-extrabold text-gray-700 mb-1">
+        {label}
+      </div>
       <textarea
         {...props}
         rows={3}
@@ -910,7 +945,9 @@ function Textarea({ label, ...props }) {
 function Select({ label, value, onChange, options }) {
   return (
     <label className="block">
-      <div className="text-sm font-extrabold text-gray-700 mb-1">{label}</div>
+      <div className="text-sm font-extrabold text-gray-700 mb-1">
+        {label}
+      </div>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
