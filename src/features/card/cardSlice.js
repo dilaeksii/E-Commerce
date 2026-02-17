@@ -59,9 +59,14 @@ const cardSlice = createSlice({
       state.totalCard -= 1;
       state.totalPrice -= decreased.price * decreased.count;
     },
+    resetCart: () => ({
+  totalCard: 0,
+  totalPrice: 0,
+  product: [],
+}),
   },
 });
 
-export const { toggleCard, deleteProduct, increase, decrease } =
+export const { toggleCard, deleteProduct, increase, decrease, resetCart } =
   cardSlice.actions;
 export default cardSlice.reducer;

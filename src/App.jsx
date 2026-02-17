@@ -19,6 +19,7 @@ import { fetchCategories } from "./features/products/categoriesSlice";
 import { Card } from "./pages/Card";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import { Checkout } from "./pages/Checkout";
+import { Order } from "./pages/Order";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -56,7 +57,9 @@ function AppContent() {
               <Route path="/team">
                 <Team />
               </Route>
-
+              <Route path="/order">
+                <Order />
+              </Route>
               <ProtectedRoute path="/checkout">
                 <Checkout />
               </ProtectedRoute>

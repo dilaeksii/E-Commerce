@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaPlus, FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
@@ -19,8 +19,12 @@ import {
   cardDelete,
 } from "../features/users/paymentSlice.js";
 
+import { useHistory } from "react-router-dom";
+import { createOrder } from "../features/products/orderSlice.js";
+
 export const Checkout = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const BLUE = "#23A6F0";
 
   const { addresses, selectedAddressId } = useSelector((s) => s.address);
@@ -29,7 +33,7 @@ export const Checkout = () => {
 
   const productTotal = cartItems.reduce(
     (sum, i) => sum + Number(i.price || 0) * Number(i.count || 0),
-    0
+    0,
   );
 
   const shipping = productTotal >= 150 ? 0 : cartItems.length ? 29.99 : 0;
@@ -88,8 +92,76 @@ export const Checkout = () => {
 
   const selectedCard = useMemo(() => {
     if (!cards?.length) return null;
-    return cards.find((c) => String(c.id) === String(selectedcardId)) || cards[0];
+    return (
+      cards.find((c) => String(c.id) === String(selectedcardId)) || cards[0]
+    );
   }, [cards, selectedcardId]);
+
+  const orderPayload = useMemo(() => {
+    const usingForm = isCardFormOpen;
+
+    const card_no = Number(
+      usingForm ? cardForm.card_no : selectedCard?.card_no,
+    );
+
+    const card_name = String(
+      usingForm ? cardForm.name_on_card : selectedCard?.name_on_card || "",
+    );
+
+    const card_expire_month = Number(
+      usingForm ? cardForm.expire_month : selectedCard?.expire_month,
+    );
+
+    const card_expire_year = Number(
+      usingForm ? cardForm.expire_year : selectedCard?.expire_year,
+    );
+
+    const card_ccv = Number(cardForm.cvv || 0);
+
+    return {
+      address_id: Number(selectedAddressId),
+      order_date: new Date().toISOString().slice(0, 19),
+      card_no,
+      card_name,
+      card_expire_month,
+      card_expire_year,
+      card_ccv,
+      price: Number(grandTotal.toFixed(2)),
+      products: (cartItems || []).map((p) => ({
+        product_id: Number(p.product_id ?? p.id),
+        count: Number(p.count ?? 1),
+        detail: String(p.detail ?? ""),
+      })),
+    };
+  }, [
+    isCardFormOpen,
+    cardForm,
+    selectedCard,
+    selectedAddressId,
+    grandTotal,
+    cartItems,
+  ]);
+
+  const handleCompleteOrder = () => {
+    if (!agreementsOk) return;
+    if (!selectedAddressId) return;
+    if (!cartItems?.length) return;
+
+    if (isCardFormOpen) {
+      if (
+        !cardForm.card_no ||
+        !cardForm.name_on_card ||
+        !cardForm.expire_month ||
+        !cardForm.expire_year
+      )
+        return;
+    } else {
+      if (!selectedCard) return;
+    }
+
+    dispatch(createOrder(orderPayload));
+    history.push("/order");
+  };
 
   const onChangeAddress = (e) => {
     const { name, value } = e.target;
@@ -206,9 +278,7 @@ export const Checkout = () => {
     <div className="w-full bg-gray-50">
       <div className="mx-auto max-w-6xl px-4 py-10 max-sm:px-3 max-sm:py-6">
         <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 max-sm:gap-4">
-          {/* LEFT */}
           <div className="lg:col-span-2 space-y-6 max-sm:space-y-4">
-            {/* TAB BAR */}
             <div className="rounded-2xl bg-white border shadow-sm p-2 flex gap-2 max-sm:flex-col">
               <button
                 type="button"
@@ -240,7 +310,6 @@ export const Checkout = () => {
               </button>
             </div>
 
-            {/* STEP 1 */}
             {step === 1 && (
               <>
                 <div
@@ -296,7 +365,9 @@ export const Checkout = () => {
                               <input
                                 type="checkbox"
                                 checked={sameInvoice}
-                                onChange={(e) => setSameInvoice(e.target.checked)}
+                                onChange={(e) =>
+                                  setSameInvoice(e.target.checked)
+                                }
                               />
                               Faturamı aynı adrese gönder
                             </label>
@@ -378,7 +449,9 @@ export const Checkout = () => {
                                 type="radio"
                                 name="address"
                                 className="mt-1"
-                                checked={String(a.id) === String(selectedAddressId)}
+                                checked={
+                                  String(a.id) === String(selectedAddressId)
+                                }
                                 onChange={() => dispatch(selectAddress(a.id))}
                               />
 
@@ -435,7 +508,6 @@ export const Checkout = () => {
                   </div>
                 </div>
 
-                {/* Address Form */}
                 {isAddOpen && (
                   <form
                     onSubmit={onSubmitAddress}
@@ -521,7 +593,6 @@ export const Checkout = () => {
               </>
             )}
 
-            {/* STEP 2 */}
             {step === 2 && (
               <div
                 className="rounded-2xl bg-white border shadow-sm overflow-hidden ring-2"
@@ -557,7 +628,6 @@ export const Checkout = () => {
 
                 <div className="p-6 max-sm:p-4">
                   <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 max-sm:grid-cols-1 max-sm:gap-4">
-                    {/* LEFT */}
                     <div className="lg:col-span-2">
                       <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
                         <div className="text-lg font-extrabold">
@@ -642,8 +712,12 @@ export const Checkout = () => {
                                       type="radio"
                                       name="card"
                                       className="mt-1"
-                                      checked={String(c.id) === String(selectedcardId)}
-                                      onChange={() => dispatch(selectCard(c.id))}
+                                      checked={
+                                        String(c.id) === String(selectedcardId)
+                                      }
+                                      onChange={() =>
+                                        dispatch(selectCard(c.id))
+                                      }
                                     />
 
                                     <div className="flex-1">
@@ -657,7 +731,7 @@ export const Checkout = () => {
                                         {c.card_no
                                           ? String(c.card_no).replace(
                                               /\d(?=\d{4})/g,
-                                              "*"
+                                              "*",
                                             )
                                           : "**** **** **** ****"}
                                       </div>
@@ -790,7 +864,6 @@ export const Checkout = () => {
                       )}
                     </div>
 
-                    {/* RIGHT */}
                     <div className="lg:col-span-1">
                       <div className="rounded-2xl border p-5 max-sm:p-4">
                         <div className="text-lg font-extrabold">
@@ -846,7 +919,6 @@ export const Checkout = () => {
             )}
           </div>
 
-          {/* RIGHT SIDEBAR */}
           <div className="space-y-5 max-sm:space-y-4">
             <div className="rounded-2xl bg-white border shadow-sm p-6 max-sm:p-4">
               <div className="text-2xl font-extrabold mb-5 max-sm:text-xl max-sm:mb-4">
@@ -858,7 +930,9 @@ export const Checkout = () => {
               <Row
                 label="Kargo İndirimi"
                 value={
-                  shippingDiscount !== 0 ? `${shippingDiscount.toFixed(2)}` : "-"
+                  shippingDiscount !== 0
+                    ? `${shippingDiscount.toFixed(2)}`
+                    : "-"
                 }
               />
 
@@ -887,11 +961,13 @@ export const Checkout = () => {
               type="button"
               onClick={() => {
                 if (step === 1) return goNext();
-                alert("Ödeme adımı (UI) - burada sipariş tamamlanacak");
+                handleCompleteOrder();
               }}
               disabled={!agreementsOk}
               className={`w-full rounded-2xl py-4 text-white font-extrabold shadow-md transition max-sm:py-3 ${
-                agreementsOk ? "hover:opacity-90" : "opacity-50 cursor-not-allowed"
+                agreementsOk
+                  ? "hover:opacity-90"
+                  : "opacity-50 cursor-not-allowed"
               }`}
               style={{ backgroundColor: BLUE }}
             >
@@ -916,9 +992,7 @@ function Row({ label, value }) {
 function Input({ label, ...props }) {
   return (
     <label className="block">
-      <div className="text-sm font-extrabold text-gray-700 mb-1">
-        {label}
-      </div>
+      <div className="text-sm font-extrabold text-gray-700 mb-1">{label}</div>
       <input
         {...props}
         className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-200 max-sm:px-3 max-sm:py-2"
@@ -930,9 +1004,7 @@ function Input({ label, ...props }) {
 function Textarea({ label, ...props }) {
   return (
     <label className="block">
-      <div className="text-sm font-extrabold text-gray-700 mb-1">
-        {label}
-      </div>
+      <div className="text-sm font-extrabold text-gray-700 mb-1">{label}</div>
       <textarea
         {...props}
         rows={3}
@@ -945,9 +1017,7 @@ function Textarea({ label, ...props }) {
 function Select({ label, value, onChange, options }) {
   return (
     <label className="block">
-      <div className="text-sm font-extrabold text-gray-700 mb-1">
-        {label}
-      </div>
+      <div className="text-sm font-extrabold text-gray-700 mb-1">{label}</div>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

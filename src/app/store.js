@@ -7,6 +7,7 @@ import categoriesReducer  from "../features/products/categoriesSlice.js"
 import cardReducer from "../features/card/cardSlice.js"
 import addressReducer from "../features/users/addressSlice.js"
 import paymentReducer from "../features/users/paymentSlice.js"
+import orderReducer  from "../features/products/orderSlice.js"
 
 export default configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
     categories: categoriesReducer,
     card: cardReducer,
     address: addressReducer,
-    payment: paymentReducer
+    payment: paymentReducer,
+    order: orderReducer
   }
 });

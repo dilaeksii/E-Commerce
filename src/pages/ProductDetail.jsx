@@ -1,9 +1,7 @@
 import { Eye, Heart, ShoppingCart } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams, useLocation, Link, NavLink } from "react-router-dom";
-import { productDetail } from "../data/ProductDetail";
-import { ProductCard } from "../../public/components/ProductCard";
 import { Clients } from "../../public/components/Clients";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../features/likes/likeSlice.js";
