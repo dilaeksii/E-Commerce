@@ -66,7 +66,7 @@ function AppContent() {
               </ProtectedRoute>
               <ProtectedRoute path="/prevorders">
                 <PrevOrders />
-              </ProtectedRoute>
+              </ProtectedRoute> 
               <Route path="/blog">
                 <Blog />
               </Route>

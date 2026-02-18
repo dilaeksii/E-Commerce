@@ -901,6 +901,42 @@ export const Checkout = () => {
                               —
                             </div>
                           </label>
+                          <label className="grid grid-cols-2 items-center p-3 cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="radio"
+                                name="installment"
+                                defaultChecked
+                              />
+                              <span className="text-sm font-bold">
+                                3 Taksit
+                              </span>
+                            </div>
+                            <div
+                              className="text-sm font-extrabold text-right"
+                              style={{ color: BLUE }}
+                            >
+                              —
+                            </div>
+                          </label>
+                          <label className="grid grid-cols-2 items-center p-3 cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="radio"
+                                name="installment"
+                                defaultChecked
+                              />
+                              <span className="text-sm font-bold">
+                                4 Taksit
+                              </span>
+                            </div>
+                            <div
+                              className="text-sm font-extrabold text-right"
+                              style={{ color: BLUE }}
+                            >
+                              —
+                            </div>
+                          </label>
                         </div>
                       </div>
                     </div>
