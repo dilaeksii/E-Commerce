@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const createOrder = createAsyncThunk(
-  "order",
+  "order/createOrder",
   async (payload, thunkAPI) => {
     try {
       const response = await axios.post(
@@ -18,10 +18,37 @@ export const createOrder = createAsyncThunk(
   },
 );
 
+export const fetchOrders = createAsyncThunk(
+  "order/fetchOrders",
+  async (_, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return thunkAPI.rejectWithValue("Token yok");
+
+      const res = await axios.get(
+        "https://workintech-fe-ecommerce.onrender.com/order",
+        { headers: { Authorization: token } },
+      );
+
+      return res.data; 
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Siparişler alınamadı",
+      );
+    }
+  },
+);
+
+
+
 const initialState = {
-  data: null,
+  data: null,          
   status: "idle",
   error: null,
+
+  orders: [],          
+  ordersStatus: "idle",
+  ordersError: null,
 };
 
 const orderSlice = createSlice({
@@ -43,6 +70,18 @@ const orderSlice = createSlice({
       .addCase(createOrder.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || "Sipariş oluşturulamadı";
+      })
+      .addCase(fetchOrders.pending, (state) => {
+        state.ordersStatus = "loading";
+        state.ordersError = null;
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.ordersStatus = "succeeded";
+        state.orders = Array.isArray(action.payload) ? action.payload : [];
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
+        state.ordersStatus = "failed";
+        state.ordersError = action.payload || "Siparişler alınamadı";
       });
   },
 });

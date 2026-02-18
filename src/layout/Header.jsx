@@ -32,7 +32,7 @@ export const Header = () => {
   const women = items.filter((item) => item.gender === "k");
   const men = items.filter((item) => item.gender === "e");
   const cardItems = useSelector((state) => state.card.totalCard);
-  console.log(cardItems);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -77,12 +77,16 @@ export const Header = () => {
           </div>
         </div>
       )}
+
       <div
-        className={`py-[20px] px-[38px] flex justify-between ${contact ? "max-sm:bg-[#F6F6F6]" : ""}`}
+        className={`py-[20px] px-[38px] flex justify-between ${
+          contact ? "max-sm:bg-[#F6F6F6]" : ""
+        }`}
       >
         <p className="text-[#252B42] font-bold text-2xl leading-[32px]">
           Bandage
         </p>
+
         <div className="flex justify-between gap-[15px] max-sm:hidden">
           <NavLink
             to="/home"
@@ -93,10 +97,13 @@ export const Header = () => {
           >
             Home
           </NavLink>
+
           <div className="relative group">
             <NavLink
               to="/shop"
-              className={`flex items-center gap-2 font-bold text-sm leading-[24px] ${shop ? "text-[#252B42]" : "text-[#737373]"}`}
+              className={`flex items-center gap-2 font-bold text-sm leading-[24px] ${
+                shop ? "text-[#252B42]" : "text-[#737373]"
+              }`}
             >
               Shop
               <FaCaretDown className="shrink-0" />
@@ -138,6 +145,7 @@ export const Header = () => {
               </div>
             </div>
           </div>
+
           <NavLink
             to="/about"
             className="font-bold text-sm leading-[24px]"
@@ -184,6 +192,7 @@ export const Header = () => {
             Pricing
           </NavLink>
         </div>
+
         {!teams && !contact && !about && (
           <div className="flex items-center gap-[15px]">
             {!auth.email && !user.email && (
@@ -197,24 +206,31 @@ export const Header = () => {
                 </Link>
               </div>
             )}
+
             <div>
               <Link
                 to="/search"
-                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams ? "text-xl" : "hidden"}`}
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${
+                  home || teams ? "text-xl" : "hidden"
+                }`}
               >
                 <FaSearch />
               </Link>
             </div>
+
             <div className="relative group">
               <div className="flex items-center gap-[5px]">
                 <div
-                  className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams ? "text-xl" : "hidden"}`}
+                  className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${
+                    home || teams ? "text-xl" : "hidden"
+                  }`}
                 >
                   <FaShoppingCart />
                 </div>{" "}
                 <span className="ont-bold text-sm leading-[24px] text-[#23A6F0] max-sm:hidden">
                   {cardItems}
                 </span>
+
                 <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full mt-2 bg-white shadow-xl rounded-lg z-50 flex flex-col py-5 px-6 gap-4 min-w-[260px] transition-all duration-200">
                   <p>Sepetinizde {cardItems} ürün bulunmaktadır.</p>
                   <CardItems />
@@ -245,6 +261,7 @@ export const Header = () => {
                 {likes}
               </span>
             </div>
+
             <div className=" hidden flex items-center gap-[5px] max-sm:flex">
               <Link
                 to="/menu"
@@ -253,19 +270,30 @@ export const Header = () => {
                 <Menu />
               </Link>
             </div>
+
             {(user.email || auth.email) && (
-              <div className="flex items-center gap-2">
-                <Gravatar
-                  email={user.email || auth.email}
-                  size={40}
-                  default="identicon"
-                  className="rounded-full"
-                />
-                <span>{user.name}</span>
+              <div className="flex items-center gap-3">
+                <Link
+                  to="/prevorders"
+                  className="max-sm:hidden font-bold text-sm leading-[24px] text-[#23A6F0] hover:text-[#1e90d2] transition"
+                >
+                  Siparişlerim
+                </Link>
+
+                <div className="flex items-center gap-2">
+                  <Gravatar
+                    email={user.email || auth.email}
+                    size={40}
+                    default="identicon"
+                    className="rounded-full"
+                  />
+                  <span>{user.name}</span>
+                </div>
               </div>
             )}
           </div>
         )}
+
         {(teams || contact || about) && !user.email && !auth.email && (
           <div className="flex gap-10 items-center max-sm:hidden">
             <Link
@@ -283,30 +311,47 @@ export const Header = () => {
             </Link>
           </div>
         )}
+
         {(teams || contact || about) && (
-          <div className="flex items-center gap-2">
-            <Gravatar
-              email={user.email || auth.email}
-              size={40}
-              default="identicon"
-              className="rounded-full"
-            />
-            <span>{user.name}</span>
+          <div className="flex items-center gap-3">
+            {(user.email || auth.email) && (
+              <Link
+                to="/prevorders"
+                className="max-sm:hidden font-bold text-sm leading-[24px] text-[#23A6F0] hover:text-[#1e90d2] transition"
+              >
+                Siparişlerim
+              </Link>
+            )}
+
+            <div className="flex items-center gap-2">
+              <Gravatar
+                email={user.email || auth.email}
+                size={40}
+                default="identicon"
+                className="rounded-full"
+              />
+              <span>{user.name}</span>
+            </div>
           </div>
         )}
+
         {(teams || contact || about) && (
           <div className="hidden max-sm:flex max-sm:items-center max-sm:gap-[15px]">
             <div>
               <Link
                 to="/search"
-                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact || about ? "text-xl" : "hidden"}`}
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${
+                  home || teams || contact || about ? "text-xl" : "hidden"
+                }`}
               >
                 <FaSearch />
               </Link>
             </div>
             <div className="flex items-center gap-[5px]">
               <div
-                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${home || teams || contact || about ? "text-xl" : "hidden"}`}
+                className={`font-bold text-sm leading-[24px] text-[#23A6F0] max-sm:text-[#252B42] max-sm:${
+                  home || teams || contact || about ? "text-xl" : "hidden"
+                }`}
               >
                 <FaShoppingCart />
               </div>
@@ -323,6 +368,7 @@ export const Header = () => {
           </div>
         )}
       </div>
+
       {home && (
         <div className="hidden flex justify-between gap-[15px] max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-8 max-sm:my-5">
           <NavLink
@@ -362,11 +408,13 @@ export const Header = () => {
             Contact
           </NavLink>
         </div>
-      )}{" "}
-      {/**Home Page Menus */}
+      )}
+
       {(shop || product || teams || contact || about) && (
         <div
-          className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${contact || about ? "max-sm:bg-[#F6F6F6]" : ""}`}
+          className={`hidden max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5 max-sm:py-5 ${
+            contact || about ? "max-sm:bg-[#F6F6F6]" : ""
+          }`}
         >
           <NavLink
             to="/home"
@@ -425,8 +473,8 @@ export const Header = () => {
             Pricing
           </NavLink>
         </div>
-      )}{" "}
-      {/**Shop Page Menus */}
+      )}
+
       {(shop || product) && (
         <div className="hidden max-sm:flex max-sm:flex-col max-sm:gap-3 max-sm:py-5 max-sm:items-center">
           <div className="flex items-center gap-[5px]">
@@ -447,9 +495,7 @@ export const Header = () => {
             </Link>
           </div>
           <div className="flex items-center gap-[5px]">
-            <div
-              className="font-bold text-sm leading-[24px] text-[#23A6F0]"
-            >
+            <div className="font-bold text-sm leading-[24px] text-[#23A6F0]">
               <FaShoppingCart />
             </div>{" "}
             <span className="ont-bold text-sm leading-[24px] text-[#23A6F0]">

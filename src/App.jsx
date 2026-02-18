@@ -20,6 +20,7 @@ import { Card } from "./pages/Card";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import { Checkout } from "./pages/Checkout";
 import { Order } from "./pages/Order";
+import { PrevOrders } from "./pages/PrevOrders";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -63,7 +64,9 @@ function AppContent() {
               <ProtectedRoute path="/checkout">
                 <Checkout />
               </ProtectedRoute>
-
+              <ProtectedRoute path="/prevorders">
+                <PrevOrders />
+              </ProtectedRoute>
               <Route path="/blog">
                 <Blog />
               </Route>

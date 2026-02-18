@@ -165,10 +165,6 @@ export const Order = () => {
                     Ürünlere Göz At
                   </button>
                 </div>
-
-                <div className="mt-4 text-xs text-gray-500">
-                  Sepetiniz otomatik olarak sıfırlandı.
-                </div>
               </div>
             </div>
           </div>
